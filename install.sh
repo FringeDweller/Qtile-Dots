@@ -206,7 +206,4 @@ cat <<"EOF"
                         
 EOF
 echo -e "${NONE}"
-
-echo "Open ~/.config/hypr/hyprland.conf to check your new initial Hyprland configuration."
-echo ""
-echo "Please reboot your system!"
+echo "Please logout and start Qtile!"
