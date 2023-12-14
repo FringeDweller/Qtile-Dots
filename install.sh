@@ -1,12 +1,11 @@
 #!/bin/bash
-#  _   _                    ____  _             _             
-# | | | |_   _ _ __  _ __  / ___|| |_ __ _ _ __| |_ ___ _ __  
-# | |_| | | | | '_ \| '__| \___ \| __/ _` | '__| __/ _ \ '__| 
-# |  _  | |_| | |_) | |     ___) | || (_| | |  | ||  __/ |    
-# |_| |_|\__, | .__/|_|    |____/ \__\__,_|_|   \__\___|_|    
-#        |___/|_|                                             
+#   ___  _   _ _        ____  _             _             
+#  / _ \| |_(_) | ___  / ___|| |_ __ _ _ __| |_ ___ _ __  
+# | | | | __| | |/ _ \ \___ \| __/ _` | '__| __/ _ \ '__| 
+# | |_| | |_| | |  __/  ___) | || (_| | |  | ||  __/ |    
+#  \__\_\\__|_|_|\___| |____/ \__\__,_|_|   \__\___|_|    
 #  
-# ----------------------------------------------------- 
+# by Stephan Raabe (2023) 
 # Version 2.0
 # ----------------------------------------------------- 
 
@@ -84,14 +83,13 @@ packages=(
 
 echo -e "${GREEN}"
 cat <<"EOF"
- _   _                  _                 _ 
-| | | |_   _ _ __  _ __| | __ _ _ __   __| |
-| |_| | | | | '_ \| '__| |/ _` | '_ \ / _` |
-|  _  | |_| | |_) | |  | | (_| | | | | (_| |
-|_| |_|\__, | .__/|_|  |_|\__,_|_| |_|\__,_|
-       |___/|_|                             
-
-HYPRLAND STARTER
+  ___  _   _ _      
+ / _ \| |_(_) | ___ 
+| | | | __| | |/ _ \
+| |_| | |_| | |  __/
+ \__\_\\__|_|_|\___|
+                    
+QTILE STARTER
 Version 2.0
 EOF
 echo -e "${NONE}"
@@ -115,7 +113,7 @@ fi
 echo ""
 
 # Install Yay
-_installYay
+# _installYay
 
 # Confirm Start
 echo -e "${GREEN}"
@@ -147,7 +145,7 @@ fi
 
 # Install packages 
 # PLEASE NOTE: Add more packages at the end of the following command
-sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium ttf-font-awesome
+sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium neofetch ttf-font-awesome
 
 # Install yay packages
 # PLEASE NOTE: Add more packages at the end of the following command
