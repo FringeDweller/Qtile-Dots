@@ -1,8 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
 #   ___ _____ ___ _     _____    ____             __ _       
 #  / _ \_   _|_ _| |   | ____|  / ___|___  _ __  / _(_) __ _ 
 # | | | || |  | || |   |  _|   | |   / _ \| '_ \| |_| |/ _` |
@@ -48,6 +43,8 @@ keys = [
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
+
+    Key([mod], "b", lazy.spawn("chromium"), desc="Chromium"),
     Key(
         [mod, "shift"],
         "Return",
@@ -68,6 +65,7 @@ keys = [
     Key([mod, "control"], "Return", lazy.spawn("rofi -show drun"), desc="Launch Rofi"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod, "shift"], "p", lazy.spawn("killall picom; sleep 0.1; picom &"), desc="Reload picom"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 ]
 
@@ -98,13 +96,16 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Max(),
+    # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    # layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(
+        # Define Window Gaps
+        # margin=10
+    ),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -122,9 +123,10 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
+        # top=bar.Bar(
         bottom=bar.Bar(
             [
-                widget.CurrentLayout(),
+                # widget.CurrentLayout(),
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
@@ -135,7 +137,7 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+                # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
