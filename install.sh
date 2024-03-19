@@ -61,8 +61,7 @@ _installParu() {
         echo "paru is already installed!"
     else
         echo "paru is not installed. Will be installed now!"
-        _installPackagesPacman "base-devel"
-        _installPackagesPacman "rust"
+        _installPackagesPacman "base-devel" 
         SCRIPT=$(realpath "$0")
         temp_path=$(dirname "$SCRIPT")
         echo $temp_path
@@ -81,6 +80,7 @@ packages=(
     "unzip"
     "gum"
     "rsync"
+    "rust"
 )
 
 echo -e "${GREEN}"
