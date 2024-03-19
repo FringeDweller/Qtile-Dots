@@ -62,6 +62,7 @@ _installParu() {
     else
         echo "paru is not installed. Will be installed now!"
         _installPackagesPacman "base-devel"
+        _installPackagesPacman "rust"
         SCRIPT=$(realpath "$0")
         temp_path=$(dirname "$SCRIPT")
         echo $temp_path
