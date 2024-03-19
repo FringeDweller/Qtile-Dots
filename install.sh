@@ -55,17 +55,16 @@ _isKVM() {
     fi
 }
 
-# Install Paru
-_installParu() {
+# Install Yay
+_installYay() {
     if sudo pacman -Qs paru > /dev/null ; then
         echo "paru is already installed!"
     else
         echo "paru is not installed. Will be installed now!"
-        _installPackagesPacman "base-devel" 
+        _installPackagesPacman "base-devel"
         SCRIPT=$(realpath "$0")
         temp_path=$(dirname "$SCRIPT")
         echo $temp_path
-        sudo pacman -S --needed base-devel
         git clone https://aur.archlinux.org/paru.git ~/paru
         cd ~/paru
         makepkg -si
@@ -73,6 +72,7 @@ _installParu() {
         echo "paru has been installed successfully."
     fi
 }
+
 
 # Required packages for the installer
 packages=(
