@@ -64,35 +64,7 @@ packages=(
     "rust"
 )
 
-import subprocess
-import shutil
-import os
-
-def check_install_paru():
-    try:
-        # Check if paru is installed using pacman
-        subprocess.run(["pacman", "-Q", "paru"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("paru is already installed.")
-    except subprocess.CalledProcessError:
-        # If paru is not installed, install it using git
-        print("paru is not installed. Installing...")
-
-        # Clone the paru repository
-        subprocess.run(["git", "clone", "https://aur.archlinux.org/paru.git"], check=True)
-
-        # Change directory to the cloned repository
-        os.chdir("paru")
-
-        # Build and install paru
-        subprocess.run(["makepkg", "-si", "--noconfirm"], check=True)
-
-        # Clean up by removing the cloned repository
-        shutil.rmtree("paru")
-
-        print("paru has been installed.")
-
-if __name__ == "__main__":
-    check_install_paru()
+python ~/Downloads/qtile/paru.py
 
 
 echo -e "${GREEN}"
