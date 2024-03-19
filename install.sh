@@ -149,7 +149,7 @@ sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst 
 
 # Install yay packages
 # PLEASE NOTE: Add more packages at the end of the following command
-paru xrdp xorgxrdp octopi microsoft-edge-stable-bin code-git
+yay -S xrdp xorgxrdp octopi microsoft-edge-stable-bin code-git
 
 # Copy configuration
 if gum confirm "DO YOU WANT TO COPY THE PREPARED dotfiles INTO .config? (YOU CAN ALSO DO THIS MANUALLY)" ;then
