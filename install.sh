@@ -55,9 +55,9 @@ _isKVM() {
     fi
 }
 
-# Install Yay
-_installYay() {
-    if sudo pacman -Qs yay > /dev/null ; then
+# Install Paru
+_installParu() {
+    if sudo pacman -Qs paru > /dev/null ; then
         echo "paru is already installed!"
     else
         echo "paru is not installed. Will be installed now!"
