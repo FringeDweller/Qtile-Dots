@@ -64,10 +64,15 @@ packages=(
 )
 
 # Install Paru
+echo "Installing Paru"
+temp_path=$(dirname "$SCRIPT")
+        echo $temp_path
 sudo pacman -S --needed base-devel
 git clone https://aur.archlinux.org/paru.git ~/paru
 cd ~/paru
 makepkg -si
+cd $temp_path
+        echo "Paru has been installed successfully."
 
 
 echo -e "${GREEN}"
