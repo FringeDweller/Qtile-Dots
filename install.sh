@@ -58,18 +58,19 @@ _isKVM() {
 # Install Yay
 _installYay() {
     if sudo pacman -Qs yay > /dev/null ; then
-        echo "yay is already installed!"
+        echo "paru is already installed!"
     else
-        echo "yay is not installed. Will be installed now!"
+        echo "paru is not installed. Will be installed now!"
         _installPackagesPacman "base-devel"
         SCRIPT=$(realpath "$0")
         temp_path=$(dirname "$SCRIPT")
         echo $temp_path
-        git clone https://aur.archlinux.org/yay-git.git ~/yay-git
-        cd ~/yay-git
+        sudo pacman -S --needed base-devel
+        git clone https://aur.archlinux.org/paru.git ~/paru
+        cd ~/paru
         makepkg -si
         cd $temp_path
-        echo "yay has been installed successfully."
+        echo "paru has been installed successfully."
     fi
 }
 
@@ -132,7 +133,7 @@ echo ""
 echo "IMPORTANT: Backup existing configurations in .config if needed."
 if gum confirm "DO YOU WANT TO START THE INSTALLATION NOW?" ;then
     echo ""
-    echo ":: Installing Hyprland and additional packages"
+    echo ":: Installing Qtile and additional packages"
     echo ""
 elif [ $? -eq 130 ]; then
     exit 130
@@ -148,7 +149,7 @@ sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst 
 
 # Install yay packages
 # PLEASE NOTE: Add more packages at the end of the following command
-yay -S xrdp xorgxrdp octopi microsoft-edge-stable-bin code-git
+paru -S xrdp xorgxrdp octopi microsoft-edge-stable-bin code-git
 
 # Copy configuration
 if gum confirm "DO YOU WANT TO COPY THE PREPARED dotfiles INTO .config? (YOU CAN ALSO DO THIS MANUALLY)" ;then
