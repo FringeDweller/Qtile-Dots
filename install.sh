@@ -9,7 +9,7 @@
 # Version 1.0
 # ----------------------------------------------------- 
 
-Clear
+clear
 
 # Some colors
 GREEN='\033[0;32m'
@@ -64,16 +64,35 @@ packages=(
     "rust"
 )
 
-# Install Paru
-echo "Installing Paru"
-temp_path=$(dirname "$SCRIPT")
-        echo $temp_path
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git ~/paru
-cd ~/paru
-makepkg -si
-cd $temp_path
-        echo "Paru has been installed successfully."
+import subprocess
+import shutil
+import os
+
+def check_install_paru():
+    try:
+        # Check if paru is installed using pacman
+        subprocess.run(["pacman", "-Q", "paru"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print("paru is already installed.")
+    except subprocess.CalledProcessError:
+        # If paru is not installed, install it using git
+        print("paru is not installed. Installing...")
+
+        # Clone the paru repository
+        subprocess.run(["git", "clone", "https://aur.archlinux.org/paru.git"], check=True)
+
+        # Change directory to the cloned repository
+        os.chdir("paru")
+
+        # Build and install paru
+        subprocess.run(["makepkg", "-si", "--noconfirm"], check=True)
+
+        # Clean up by removing the cloned repository
+        shutil.rmtree("paru")
+
+        print("paru has been installed.")
+
+if __name__ == "__main__":
+    check_install_paru()
 
 
 echo -e "${GREEN}"
