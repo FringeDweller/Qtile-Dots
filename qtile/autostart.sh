@@ -17,7 +17,7 @@
 # xrandr --output Virtual-1 --mode 1920x1080
 
 # Set Keyboard Layout
-setxkbmap de
+setxkbmap us
 
 # Start picom
 picom &
