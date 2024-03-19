@@ -144,11 +144,11 @@ fi
 
 # Install packages 
 # PLEASE NOTE: Add more packages at the end of the following command
-sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium neofetch ttf-font-awesome zsh sddm openssh qemu-full virt-manager virt-viewer dnsmasq bridge-utils libguestfs ebtables vde2 openbsd-netcat mesa
+sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst neofetch ttf-font-awesome zsh sddm openssh qemu-full virt-manager virt-viewer dnsmasq bridge-utils libguestfs ebtables vde2 openbsd-netcat mesa
 
 # Install yay packages
 # PLEASE NOTE: Add more packages at the end of the following command
-yay -S xrdp xorgxrdp octopi
+yay -S xrdp xorgxrdp octopi microsoft-edge-stable-bin code-git
 
 # Copy configuration
 if gum confirm "DO YOU WANT TO COPY THE PREPARED dotfiles INTO .config? (YOU CAN ALSO DO THIS MANUALLY)" ;then
