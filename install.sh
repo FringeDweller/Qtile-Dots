@@ -55,14 +55,6 @@ _isKVM() {
     fi
 }
 
-# Install Paru
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-
-}
-
 # Required packages for the installer
 packages=(
     "wget"
