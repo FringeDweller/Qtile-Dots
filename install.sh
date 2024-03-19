@@ -145,7 +145,7 @@ fi
 
 # Install packages 
 # PLEASE NOTE: Add more packages at the end of the following command
-sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst neofetch ttf-font-awesome zsh sddm openssh qemu-full virt-manager virt-viewer dnsmasq bridge-utils libguestfs ebtables vde2 openbsd-netcat mesa neovim
+sudo pacman -S --needed xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst neofetch ttf-font-awesome zsh sddm openssh qemu-full virt-manager virt-viewer dnsmasq bridge-utils libguestfs ebtables vde2 openbsd-netcat mesa neovim
 
 # Install yay packages
 # PLEASE NOTE: Add more packages at the end of the following command
