@@ -145,11 +145,11 @@ fi
 
 # Install packages 
 # PLEASE NOTE: Add more packages at the end of the following command
-sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium neofetch ttf-font-awesome
+sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium neofetch ttf-font-awesome zsh sddm openssh qemu-full virt-manager virt-viewer dnsmasq bridge-utils libguestfs ebtables vde2 openbsd-netcat
 
 # Install yay packages
 # PLEASE NOTE: Add more packages at the end of the following command
-# yay -S pfetch
+yay -S xrdp xorgxrdp octopi
 
 # Copy configuration
 if gum confirm "DO YOU WANT TO COPY THE PREPARED dotfiles INTO .config? (YOU CAN ALSO DO THIS MANUALLY)" ;then
