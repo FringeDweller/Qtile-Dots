@@ -130,7 +130,6 @@ echo "This script will install the core packages of Qtile:"
 echo "qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium ttf-font-awesome"
 echo ""
 echo "IMPORTANT: Backup existing configurations in .config if needed."
-echo "This script doesn't support NVIDIA graphis driver."
 if gum confirm "DO YOU WANT TO START THE INSTALLATION NOW?" ;then
     echo ""
     echo ":: Installing Hyprland and additional packages"
@@ -145,7 +144,7 @@ fi
 
 # Install packages 
 # PLEASE NOTE: Add more packages at the end of the following command
-sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium neofetch ttf-font-awesome zsh sddm openssh qemu-full virt-manager virt-viewer dnsmasq bridge-utils libguestfs ebtables vde2 openbsd-netcat
+sudo pacman -S qtile xorg xorg-xinit nitrogen thunar picom rofi alacritty dunst chromium neofetch ttf-font-awesome zsh sddm openssh qemu-full virt-manager virt-viewer dnsmasq bridge-utils libguestfs ebtables vde2 openbsd-netcat mesa
 
 # Install yay packages
 # PLEASE NOTE: Add more packages at the end of the following command
