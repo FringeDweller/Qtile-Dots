@@ -1,1 +1,1 @@
-My attempt at a Qtile config.
+My personal dotfiles
