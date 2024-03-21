@@ -20,7 +20,7 @@ def check_packages():
         "rofi", "alacritty", "dunst", "neofetch", "ttf-font-awesome", 
         "zsh", "qemu-full", "virt-manager", "virt-viewer", "dnsmasq", 
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
-        "mesa", "neovim"
+        "mesa", "neovim", "geany", "geany-plugins"
     ]
     for package in required_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
@@ -70,7 +70,7 @@ def set_default_shell():
 
 def check_optional_packages():
     print("Checking optional packages...")
-    optional_packages = ["xrdp", "xorgxrdp", "octopi", "microsoft-edge-stable-bin", "code-git"]
+    optional_packages = ["xrdp", "xorgxrdp", "octopi", "microsoft-edge-stable-bin"]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
