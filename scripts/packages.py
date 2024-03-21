@@ -28,17 +28,19 @@ def check_packages():
         else:
             print(f"{package} is already installed.")
 
-def check_optional_packages():
-    print("Checking optional packages...")
-    optional_packages = ["xrdp", "xorgxrdp", "octopi", "microsoft-edge-stable-bin", "code-git"]
-    for package in optional_packages:
-        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
-        if installed.returncode != 0:
-            print(f"{package} is not installed. Installing using Yay...")
-            subprocess.run(['yay', package])
-        else:
-            print(f"{package} is already installed.")
-
+def check_yay():
+    print("Checking if Yay is installed...")
+    installed = subprocess.run(['sudo', 'pacman', '-Q', 'yay'], capture_output=True)
+    if installed.returncode != 0:
+        print("Yay is not installed. Installing using git...")
+        subprocess.run(['git', 'clone', 'https://aur.archlinux.org/yay.git'])
+        os.chdir('yay')  # Change the working directory to 'yay'
+        subprocess.run(['makepkg', '-si'])
+        os.chdir('..')  # Change back to the parent directory
+        shutil.rmtree('yay')  # Remove the yay folder
+    else:
+        print("Yay is already installed.")
+        
 def check_optional_packages():
     print("Checking optional packages...")
     optional_packages = ["xrdp", "xorgxrdp", "octopi", "microsoft-edge-stable-bin", "visual-studio-code-bin"]
