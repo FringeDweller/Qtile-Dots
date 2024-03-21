@@ -1,4 +1,6 @@
 import subprocess
+import os
+import shutil
 
 def check_ssh():
     print("Checking if OpenSSH is installed...")
