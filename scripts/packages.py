@@ -8,11 +8,10 @@ def check_ssh():
     if installed.returncode != 0:
         print("OpenSSH is not installed. Installing and enabling...")
         subprocess.run(['sudo', 'pacman', '-Sy', 'openssh'])
-        subprocess.run(['sudo', 'systemctl', 'enable', 'ssh'])
-        subprocess.run(['sudo', 'systemctl', 'start', 'ssh'])
-    else:
-        print("OpenSSH is already installed.")
-
+    print("Enabling and starting SSH service...")
+    subprocess.run(['sudo', 'systemctl', 'enable', 'sshd'])
+    subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
+    
 def check_packages():
     print("Checking required packages...")
     required_packages = [
