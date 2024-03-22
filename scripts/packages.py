@@ -63,8 +63,11 @@ def create_symlinks():
             source_dir = os.path.join(root, directory)
             target_dir = os.path.join(config_path, directory)
             if not os.path.exists(target_dir):
-                os.symlink(source_dir, target_dir)
-                print(f"Created symlink: {source_dir} -> {target_dir}")
+                try:
+                    os.symlink(source_dir, target_dir)
+                    print(f"Created symlink: {source_dir} -> {target_dir}")
+                except Exception as e:
+                    print(f"Error creating symlink: {e}")
             else:
                 print(f"Symlink already exists: {source_dir} -> {target_dir}")
 
