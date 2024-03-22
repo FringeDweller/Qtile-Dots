@@ -55,18 +55,27 @@ def set_default_shell(user, shell):
     subprocess.run(['sudo', 'chsh', '-s', shell, user])
 
 def create_symlinks():
-    print("Creating symbolic links for the dots folder...")
+    print("Creating symbolic links for the dots folders...")
+    dots_path = os.path.expanduser('~/dots')
     config_path = os.path.expanduser('~/.config')
-    source_dir = os.path.expanduser('~/dots')
-    target_dir = os.path.join(config_path, source_dir)
-    if not os.path.exists(target_dir):
-        try:
-            os.symlink(source_dir, target_dir)
-            print(f"Created symlink: {source_dir} -> {target_dir}")
-        except Exception as e:
-            print(f"Error creating symlink: {e}")
-    else:
-        print(f"Symlink already exists: {source_dir} -> {target_dir}")
+
+    if not os.path.exists(config_path):
+        print(f"Target directory {config_path} does not exist. Aborting symlink creation.")
+        return
+
+    for folder_name in os.listdir(dots_path):
+        source_dir = os.path.join(dots_path, folder_name)
+        target_dir = os.path.join(config_path, folder_name)
+
+        if os.path.isdir(source_dir):
+            if not os.path.exists(target_dir):
+                try:
+                    os.symlink(source_dir, target_dir)
+                    print(f"Created symlink: {source_dir} -> {target_dir}")
+                except Exception as e:
+                    print(f"Error creating symlink: {e}")
+            else:
+                print(f"Symlink already exists: {source_dir} -> {target_dir}")
 
 def main():
     print("Starting system configuration...")
