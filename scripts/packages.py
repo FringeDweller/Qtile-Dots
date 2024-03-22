@@ -55,21 +55,18 @@ def set_zsh_default_shell():
     subprocess.run(['chsh', '-s', '/bin/zsh', pwd.getpwuid(os.getuid()).pw_name])
 
 def create_symlinks():
-    print("Creating symbolic links between /home/dots directories and ~/.config...")
-    dots_path = '/home/dots'
+    print("Creating symbolic links for the dots folder...")
     config_path = os.path.expanduser('~/.config')
-    for root, dirs, files in os.walk(dots_path):
-        for directory in dirs:
-            source_dir = os.path.join(root, directory)
-            target_dir = os.path.join(config_path, directory)
-            if not os.path.exists(target_dir):
-                try:
-                    os.symlink(source_dir, target_dir)
-                    print(f"Created symlink: {source_dir} -> {target_dir}")
-                except Exception as e:
-                    print(f"Error creating symlink: {e}")
-            else:
-                print(f"Symlink already exists: {source_dir} -> {target_dir}")
+    source_dir = os.path.expanduser('~/dots')
+    target_dir = os.path.join(config_path, os.path.basename(source_dir))
+    if not os.path.exists(target_dir):
+        try:
+            os.symlink(source_dir, target_dir)
+            print(f"Created symlink: {source_dir} -> {target_dir}")
+        except Exception as e:
+            print(f"Error creating symlink: {e}")
+    else:
+        print(f"Symlink already exists: {source_dir} -> {target_dir}")
 
 def main():
     print("Starting system configuration...")
