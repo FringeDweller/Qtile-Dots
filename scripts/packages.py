@@ -16,7 +16,7 @@ def check_packages():
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
-            subprocess.run(['sudo', 'pacman', '-Sy', '--noconfirm', package])
+            subprocess.run(['sudo', 'pacman', '-S', '--needed', package])
 
 def check_yay():
     print("Checking and installing Yay...")
@@ -25,7 +25,7 @@ def check_yay():
         print("Yay is not installed. Installing using git...")
         subprocess.run(['git', 'clone', 'https://aur.archlinux.org/yay.git'])
         os.chdir('yay')  # Change the working directory to 'yay'
-        subprocess.run(['makepkg', '-si', '--noconfirm'])
+        subprocess.run(['makepkg', '-si'])
         os.chdir('..')  # Change back to the parent directory
         shutil.rmtree('yay')  # Remove the yay folder
     else:
@@ -33,22 +33,12 @@ def check_yay():
 
 def check_optional_packages():
     print("Checking and installing optional packages with Yay...")
-    optional_packages = ["xrdp", "xorgxrdp", "octopi"]
+    optional_packages = ["xrdp", "xorgxrdp", "octopi", "brave-bin"]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing using Yay...")
-            subprocess.run(['yay', '-Sy', '--noconfirm', package])
-
-def clone_and_build_iridium():
-    print("Cloning and building Iridium browser...")
-    subprocess.run(['git', 'clone', 'https://github.com/iridium-browser/iridium-browser.git'])
-    os.chdir('iridium-browser')  # Change the working directory to 'iridium-browser'
-    subprocess.run(['./configure'])
-    subprocess.run(['make'])
-    subprocess.run(['sudo', 'make', 'install'])
-    os.chdir('..')  # Change back to the parent directory
-    shutil.rmtree('iridium-browser')  # Remove the iridium-browser folder
+            subprocess.run(['yay', '-S', package])
 
 def check_ssh():
     print("Checking and enabling SSH service...")
@@ -83,7 +73,6 @@ def main():
     check_packages()
     check_yay()
     check_optional_packages()
-    clone_and_build_iridium()
     check_ssh()
     check_xrdp()
     set_zsh_default_shell()
