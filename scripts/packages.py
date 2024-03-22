@@ -33,7 +33,7 @@ def check_yay():
 
 def check_optional_packages():
     print("Checking and installing optional packages with Yay...")
-    optional_packages = ["xrdp", "xorgxrdp", "octopi", "brave-bin"]
+    optional_packages = ["nomachine", "octopi", "brave-bin"]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
