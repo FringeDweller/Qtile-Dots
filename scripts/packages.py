@@ -33,12 +33,22 @@ def check_yay():
 
 def check_optional_packages():
     print("Checking and installing optional packages with Yay...")
-    optional_packages = ["xrdp", "xorgxrdp", "octopi", "microsoft-edge-stable-bin", "code-git"]
+    optional_packages = ["xrdp", "xorgxrdp", "octopi"]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing using Yay...")
             subprocess.run(['yay', '-Sy', '--noconfirm', package])
+
+def clone_and_build_iridium():
+    print("Cloning and building Iridium browser...")
+    subprocess.run(['git', 'clone', 'https://github.com/iridium-browser/iridium-browser.git'])
+    os.chdir('iridium-browser')  # Change the working directory to 'iridium-browser'
+    subprocess.run(['./configure'])
+    subprocess.run(['make'])
+    subprocess.run(['sudo', 'make', 'install'])
+    os.chdir('..')  # Change back to the parent directory
+    shutil.rmtree('iridium-browser')  # Remove the iridium-browser folder
 
 def check_ssh():
     print("Checking and enabling SSH service...")
@@ -73,6 +83,7 @@ def main():
     check_packages()
     check_yay()
     check_optional_packages()
+    clone_and_build_iridium()
     check_ssh()
     check_xrdp()
     set_zsh_default_shell()
