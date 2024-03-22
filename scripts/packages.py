@@ -33,7 +33,7 @@ def check_yay():
 
 def check_optional_packages():
     print("Checking and installing optional packages with Yay...")
-    optional_packages = ["nomachine", "octopi", "brave-bin"]
+    optional_packages = ["octopi", "brave-bin", "nomachine"]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
@@ -43,12 +43,22 @@ def check_optional_packages():
 def check_ssh():
     print("Checking and enabling SSH service...")
     subprocess.run(['sudo', 'systemctl', 'enable', 'sshd'])
-    subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
+    result = subprocess.run(['sudo', 'systemctl', 'is-active', 'sshd'], capture_output=True)
+    if result.returncode != 0:
+        print("SSH is not active. Starting SSH service...")
+        subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
+    else:
+        print("SSH is already active.")
 
-def check_xrdp():
-    print("Checking and enabling XRDP service...")
-    subprocess.run(['sudo', 'systemctl', 'enable', 'xrdp'])
-    subprocess.run(['sudo', 'systemctl', 'start', 'xrdp'])
+def check_nomachine():
+    print("Checking and enabling NoMachine service...")
+    subprocess.run(['sudo', 'systemctl', 'enable', 'nxserver'])
+    result = subprocess.run(['sudo', 'systemctl', 'is-active', 'nxserver'], capture_output=True)
+    if result.returncode != 0:
+        print("NoMachine is not active. Starting NoMachine service...")
+        subprocess.run(['sudo', 'systemctl', 'start', 'nxserver'])
+    else:
+        print("NoMachine is already active.")
 
 def set_default_shell(user, shell):
     print(f"Setting {shell} as the default shell for {user}...")
@@ -83,7 +93,7 @@ def main():
     check_yay()
     check_optional_packages()
     check_ssh()
-    check_xrdp()
+    check_nomachine()
     set_default_shell(os.getlogin(), '/bin/zsh')
     set_default_shell('root', '/bin/zsh')
     create_symlinks()
