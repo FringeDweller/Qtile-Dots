@@ -50,15 +50,15 @@ def check_xrdp():
     subprocess.run(['sudo', 'systemctl', 'enable', 'xrdp'])
     subprocess.run(['sudo', 'systemctl', 'start', 'xrdp'])
 
-def set_zsh_default_shell():
-    print("Setting Zsh as the default shell...")
-    subprocess.run(['chsh', '-s', '/bin/zsh', pwd.getpwuid(os.getuid()).pw_name])
+def set_default_shell(user, shell):
+    print(f"Setting {shell} as the default shell for {user}...")
+    subprocess.run(['sudo', 'chsh', '-s', shell, user])
 
 def create_symlinks():
     print("Creating symbolic links for the dots folder...")
     config_path = os.path.expanduser('~/.config')
     source_dir = os.path.expanduser('~/dots')
-    target_dir = os.path.join(config_path, os.path.basename(source_dir))
+    target_dir = os.path.join(config_path, source_dir)
     if not os.path.exists(target_dir):
         try:
             os.symlink(source_dir, target_dir)
@@ -75,7 +75,8 @@ def main():
     check_optional_packages()
     check_ssh()
     check_xrdp()
-    set_zsh_default_shell()
+    set_default_shell(os.getlogin(), '/bin/zsh')
+    set_default_shell('root', '/bin/zsh')
     create_symlinks()
     print("System configuration completed.")
 
