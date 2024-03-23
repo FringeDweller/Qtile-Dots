@@ -10,7 +10,7 @@ def check_packages():
         "zsh", "qemu-full", "virt-manager", "virt-viewer", "dnsmasq", 
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
         "mesa", "neovim", "geany", "geany-plugins", "openssh",
-        "udisks2", "gvfs", "pavucontrol", "qtile-extras"
+        "udisks2", "gvfs", "pavucontrol"
     ]
     for package in required_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Qs', package], capture_output=True)
@@ -33,7 +33,7 @@ def check_yay():
 
 def check_optional_packages():
     print("Checking and installing optional packages with Yay...")
-    optional_packages = ["octopi", "brave-bin", "nomachine"]
+    optional_packages = ["octopi", "brave-bin", "nomachine", "qtile-extras"]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Qs', package], capture_output=True)
         if installed.returncode != 0:
