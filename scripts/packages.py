@@ -10,7 +10,7 @@ def check_packages():
         "zsh", "qemu-full", "virt-manager", "virt-viewer", "dnsmasq", 
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
         "mesa", "neovim", "geany", "geany-plugins", "openssh",
-        "udisks2", "gvfs", "pavucontrol"
+        "udisks2", "gvfs", "pavucontrol", "qtile-extras"
     ]
     for package in required_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Qs', package], capture_output=True)
