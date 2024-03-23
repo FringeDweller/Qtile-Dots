@@ -1,3 +1,8 @@
+import subprocess
+import os
+import shutil
+import pwd
+
 def check_packages():
     print("Checking and installing required packages with pacman...")
     required_packages = [
