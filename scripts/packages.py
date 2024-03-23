@@ -90,7 +90,7 @@ def create_symlinks():
         if os.path.isdir(source_dir):
             if not os.path.exists(target_dir):
                 try:
-                    os.symlink(source_dir, target_dir
+                    os.symlink(source_dir, target_dir)
                     print(f"Created symlink: {source_dir} -> {target_dir}")
                 except Exception as e:
                     print(f"Error creating symlink: {e}")
