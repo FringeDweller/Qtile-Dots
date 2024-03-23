@@ -13,14 +13,14 @@ def check_packages():
         "udisks2", "gvfs"
     ]
     for package in required_packages:
-        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
+        installed = subprocess.run(['sudo', 'pacman', '-Qs', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
             subprocess.run(['sudo', 'pacman', '-S', '--needed', package])
 
 def check_yay():
     print("Checking and installing Yay...")
-    installed = subprocess.run(['sudo', 'pacman', '-Q', 'yay'], capture_output=True)
+    installed = subprocess.run(['sudo', 'pacman', '-Qs', 'yay'], capture_output=True)
     if installed.returncode != 0:
         print("Yay is not installed. Installing using git...")
         subprocess.run(['git', 'clone', 'https://aur.archlinux.org/yay.git'])
@@ -35,7 +35,7 @@ def check_optional_packages():
     print("Checking and installing optional packages with Yay...")
     optional_packages = ["octopi", "brave-bin", "nomachine"]
     for package in optional_packages:
-        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
+        installed = subprocess.run(['sudo', 'pacman', '-Qs', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing using Yay...")
             subprocess.run(['yay', '-S', package])
