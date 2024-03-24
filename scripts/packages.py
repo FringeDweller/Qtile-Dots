@@ -10,7 +10,7 @@ def check_packages():
         "qemu", "virt-manager", "virt-viewer", "dnsmasq", 
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
         "mesa", "neovim", "geany", "geany-plugins", "openssh",
-        "udisks2", "gvfs", "pavucontrol", "python-psutil", "feh", "nerd-fonts-complete",
+        "udisks2", "gvfs", "pavucontrol", "python-psutil", "feh", "nerd-fonts",
         "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "alsa-utils", "mc", "python-pywal"
     ]
@@ -75,7 +75,9 @@ def check_udisks2():
 
 def install_netbird():
     print("Installing Netbird...")
-    subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh', '|', 'sh'])
+    subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh'], check=True)
+    subprocess.run(['sh', 'install.sh'], check=True, cwd='/tmp')
+    os.remove('/tmp/install.sh')  # Remove the installation script after execution
 
 def setup_netbird():
     print("Setting up Netbird...")
@@ -95,3 +97,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
