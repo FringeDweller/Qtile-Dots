@@ -75,9 +75,12 @@ def check_udisks2():
 
 def install_netbird():
     print("Installing Netbird...")
-    subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh'], check=True)
-    subprocess.run(['sh', 'install.sh'], check=True, cwd='/tmp')
-    os.remove('/tmp/install.sh')  # Remove the installation script after execution
+    try:
+        subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh', '-o', '/tmp/install.sh'], check=True)
+        subprocess.run(['sh', '/tmp/install.sh'], check=True)
+        os.remove('/tmp/install.sh')  # Remove the installation script after execution
+    except subprocess.CalledProcessError as e:
+        print(f"Error installing Netbird: {e}")
 
 def setup_netbird():
     print("Setting up Netbird...")
@@ -97,4 +100,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
