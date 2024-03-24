@@ -11,8 +11,8 @@ def check_packages():
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
         "mesa", "neovim", "geany", "geany-plugins", "openssh",
         "udisks2", "gvfs", "pavucontrol", "python-psutil", "feh", "nerd-fonts-complete",
-        "yazi", "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
-        "fzf", "zoxide", "alsa-utils"
+        "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
+        "fzf", "zoxide", "alsa-utils", "mc", "python-pywal"
     ]
     for package in required_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
@@ -73,28 +73,13 @@ def check_udisks2():
     else:
         print("udisks2 is already active.")
 
-def create_symlinks():
-    print("Creating symbolic links for the dots folders...")
-    dots_path = os.path.expanduser('~/dots')
-    config_path = os.path.expanduser('~/.config')
+def install_netbird():
+    print("Installing Netbird...")
+    subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh', '|', 'sh'])
 
-    if not os.path.exists(config_path):
-        print(f"Target directory {config_path} does not exist. Aborting symlink creation.")
-        return
-
-    for folder_name in os.listdir(dots_path):
-        source_dir = os.path.join(dots_path, folder_name)
-        target_dir = os.path.join(config_path, folder_name)
-
-        if os.path.isdir(source_dir):
-            if not os.path.exists(target_dir):
-                try:
-                    os.symlink(source_dir, target_dir)
-                    print(f"Created symlink: {source_dir} -> {target_dir}")
-                except Exception as e:
-                    print(f"Error creating symlink: {e}")
-            else:
-                print(f"Symlink already exists: {source_dir} -> {target_dir}")
+def setup_netbird():
+    print("Setting up Netbird...")
+    subprocess.run(['sudo', 'netbird', 'up', '--setup-key', 'F63559C6-D58-4FC3-BE82-32BDFD55459'])
 
 def main():
     print("Starting system configuration...")
@@ -104,7 +89,8 @@ def main():
     check_ssh()
     check_nomachine()
     check_udisks2()
-    create_symlinks()
+    install_netbird()
+    setup_netbird()
     print("System configuration completed.")
 
 if __name__ == "__main__":
