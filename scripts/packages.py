@@ -36,7 +36,10 @@ def check_paru():
 
 def check_optional_packages():
     print("Checking and installing optional packages with Paru...")
-    optional_packages = ["brave-bin", "nomachine", "qtile-extras", "python-pulsectl-asyncio", "udiskie"]
+    optional_packages = [
+        "brave-bin", "nomachine", "qtile-extras", 
+        "python-pulsectl-asyncio", "udiskie"
+    ]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
@@ -73,22 +76,15 @@ def check_udisks2():
     else:
         print("udisks2 is already active.")
 
-def install_netbird():
-    print("Installing Netbird...")
-    try:
-        subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh', '-o', '/tmp/install.sh'], check=True)
-        os.chmod('/tmp/install.sh', 0o755)  # Make the script executable
-        subprocess.run(['sudo', '/tmp/install.sh'], check=True)
-        os.remove('/tmp/install.sh')  # Remove the installation script after execution
-        
-        # Install Netbird service
-        subprocess.run(['sudo', 'netbird', 'service', 'install'], check=True)
-        
-    except subprocess.CalledProcessError as e:
-        print(f"Error installing Netbird: {e}")
+def main():
+    print("Starting system configuration...")
+    check_packages()
+    check_paru()
+    check_optional_packages()
+    check_ssh()
+    check_nomachine()
+    check_udisks2()
+    print("System configuration completed.")
 
-def start_netbird():
-    print("Starting Netbird service...")
-    try:
-        subprocess.run(['sudo', 'netbird', 'service', 'start'], check=True)
-    except subprocess.CalledProcess
+if __name__ == "__main__":
+    main()
