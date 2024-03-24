@@ -31,14 +31,11 @@ from libqtile.utils import guess_terminal
 from libqtile import hook
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
-
-@hook.subscribe.startup
-def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
-    subprocess.Popen([home])
+import os
+import subprocess
 
 mod = "mod4"
-terminal = guess_terminal()
+terminal = "kitty"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -152,7 +149,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
+    font="Fira Code",
     fontsize=12,
     padding=6,
 )
@@ -191,7 +188,7 @@ screens = [
                 widget.CPU(**decor),
 		widget.Spacer(length=10),
                 #widget.Clipboard(background="888888", **powerline),
-                widget.PulseVolume(**decor),
+                widget.Volume(fmt = '🕫  Vol: {}', **decor),
 		widget.Spacer(length=10),
                 #widget.TextBox("default config", name="default"),
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
@@ -250,6 +247,12 @@ auto_minimize = True
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
 
+@hook.subscribe.startup_once
+def start_once():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
 # mailing lists, GitHub issues, and other WM documentation that suggest setting
@@ -259,3 +262,4 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "Qtile"
+
