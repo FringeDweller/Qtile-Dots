@@ -73,23 +73,6 @@ def check_udisks2():
     else:
         print("udisks2 is already active.")
 
-def install_netbird():
-    print("Installing Netbird...")
-    try:
-        subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh', '-o', '/tmp/install.sh'], check=True)
-        os.chmod('/tmp/install.sh', 0o755)  # Make the script executable
-        subprocess.run(['sudo', '/tmp/install.sh'], check=True)
-        os.remove('/tmp/install.sh')  # Remove the installation script after execution
-        
-        # Install and start Netbird service
-        subprocess.run(['sudo', 'netbird', 'service', 'install'], check=True)
-        subprocess.run(['sudo', 'netbird', 'service', 'start'], check=True)
-        
-        subprocess.run(['sudo', 'netbird', 'up', '--setup-key', 'F63559C6-D58-4FC3-BE82-32BDFD55459'])
-        
-    except subprocess.CalledProcessError as e:
-        print(f"Error installing Netbird: {e}")
-
 def main():
     print("Starting system configuration...")
     check_packages()
@@ -98,7 +81,6 @@ def main():
     check_ssh()
     check_nomachine()
     check_udisks2()
-    install_netbird()
     print("System configuration completed.")
 
 if __name__ == "__main__":
