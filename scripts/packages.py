@@ -5,40 +5,43 @@ import shutil
 def check_packages():
     print("Checking and installing required packages with pacman...")
     required_packages = [
-        "git", "xorg", "xorg-xinit", "nitrogen", "thunar", "picom", 
-        "rofi", "alacritty", "dunst", "neofetch", "ttf-font-awesome", 
-        "zsh", "qemu-full", "virt-manager", "virt-viewer", "dnsmasq", 
+        "git", "xorg", "xorg-xinit", "nitrogen", "picom", 
+        "rofi", "kitty", "dunst", "neofetch", "ttf-font-awesome", 
+        "qemu", "virt-manager", "virt-viewer", "dnsmasq", 
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
         "mesa", "neovim", "geany", "geany-plugins", "openssh",
-        "udisks2", "gvfs", "pavucontrol"
+        "udisks2", "gvfs", "pavucontrol", "python-psutil", "feh", "nerd-fonts-complete",
+        "yazi", "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
+        "fzf", "zoxide", "alsa-utils"
     ]
     for package in required_packages:
-        installed = subprocess.run(['sudo', 'pacman', '-Qs', package], capture_output=True)
+        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
             subprocess.run(['sudo', 'pacman', '-S', '--needed', package])
 
-def check_yay():
-    print("Checking and installing Yay...")
-    installed = subprocess.run(['sudo', 'pacman', '-Qs', 'yay'], capture_output=True)
+def check_paru():
+    print("Checking and installing Paru...")
+    installed = subprocess.run(['sudo', 'pacman', '-Q', 'paru'], capture_output=True)
     if installed.returncode != 0:
-        print("Yay is not installed. Installing using git...")
-        subprocess.run(['git', 'clone', 'https://aur.archlinux.org/yay.git'])
-        os.chdir('yay')  # Change the working directory to 'yay'
+        print("Paru is not installed. Installing...")
+        subprocess.run(['sudo', 'pacman', '-S', '--needed', 'base-devel'])
+        subprocess.run(['git', 'clone', 'https://aur.archlinux.org/paru.git'])
+        os.chdir('paru')  # Change the working directory to 'paru'
         subprocess.run(['makepkg', '-si'])
         os.chdir('..')  # Change back to the parent directory
-        shutil.rmtree('yay')  # Remove the yay folder
+        shutil.rmtree('paru')  # Remove the paru folder
     else:
-        print("Yay is already installed.")
+        print("Paru is already installed.")
 
 def check_optional_packages():
-    print("Checking and installing optional packages with Yay...")
-    optional_packages = ["octopi", "brave-bin", "nomachine", "qtile-extras"]
+    print("Checking and installing optional packages with Paru...")
+    optional_packages = ["brave-bin", "nomachine", "qtile-extras", "python-pulsectl-asyncio", "udiskie"]
     for package in optional_packages:
-        installed = subprocess.run(['sudo', 'pacman', '-Qs', package], capture_output=True)
+        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
-            print(f"{package} is not installed. Installing using Yay...")
-            subprocess.run(['yay', '-S', package])
+            print(f"{package} is not installed. Installing using Paru...")
+            subprocess.run(['paru', '-S', package])
 
 def check_ssh():
     print("Checking and enabling SSH service...")
@@ -70,10 +73,6 @@ def check_udisks2():
     else:
         print("udisks2 is already active.")
 
-def set_default_shell(user, shell):
-    print(f"Setting {shell} as the default shell for {user}...")
-    subprocess.run(['sudo', 'chsh', '-s', shell, user])
-
 def create_symlinks():
     print("Creating symbolic links for the dots folders...")
     dots_path = os.path.expanduser('~/dots')
@@ -100,13 +99,11 @@ def create_symlinks():
 def main():
     print("Starting system configuration...")
     check_packages()
-    check_yay()
+    check_paru()
     check_optional_packages()
     check_ssh()
     check_nomachine()
     check_udisks2()
-    set_default_shell(os.getlogin(), '/bin/zsh')
-    set_default_shell('root', '/bin/zsh')
     create_symlinks()
     print("System configuration completed.")
 
