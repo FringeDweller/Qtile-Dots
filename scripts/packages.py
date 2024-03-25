@@ -20,7 +20,10 @@ def backup_config():
     for file_path in config_files:
         if os.path.exists(file_path):
             backup_file = os.path.join(backup_dir, os.path.basename(file_path))
-            shutil.copy(file_path, backup_file)
+            if os.path.isdir(file_path):
+                shutil.copytree(file_path, backup_file)
+            else:
+                shutil.copy(file_path, backup_file)
             print(f"Backup created: {backup_file}")
         else:
             print(f"File not found: {file_path}")
@@ -78,38 +81,6 @@ def install_rofi_themes():
         os.chdir("-")  # Switch back to the previous directory
     else:
         print("Rofi repository already exists. Skipping installation.")
-
-def copy_files():
-    print("Copying .bashrc file and folders...")
-    src_bashrc = os.path.expanduser("~/dots/scripts/.bashrc")
-    dest_bashrc = os.path.expanduser("~/.bashrc")
-    shutil.copy(src_bashrc, dest_bashrc)
-    print("Copied .bashrc file.")
-
-    folders_to_copy = {
-        os.path.expanduser("~/dots/wallpaper"): os.path.expanduser("~/Pictures/wallpapers"),
-        os.path.expanduser("~/dots/qtile"): os.path.expanduser("~/.config/qtile"),
-        os.path.expanduser("~/dots/dunst"): os.path.expanduser("~/.config/dunst"),
-        os.path.expanduser("~/dots/picom"): os.path.expanduser("~/.config/picom"),
-    }
-
-    for src_folder, dest_folder in folders_to_copy.items():
-        print(f"Copying {src_folder} to {dest_folder}...")
-        if os.path.exists(dest_folder):
-            shutil.rmtree(dest_folder)
-        shutil.copytree(src_folder, dest_folder)
-        print(f"Copied {src_folder} to {dest_folder}")
-
-def create_folders():
-    print("Creating necessary folders...")
-    folders_to_create = [
-        os.path.expanduser("~/Downloads"),
-        os.path.expanduser("~/Pictures"),
-        os.path.expanduser("~/Pictures/wallpapers")
-    ]
-    for folder in folders_to_create:
-        os.makedirs(folder, exist_ok=True)
-    print("Folders created successfully.")
 
 def main():
     backup_config()
