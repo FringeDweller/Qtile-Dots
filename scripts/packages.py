@@ -44,7 +44,6 @@ def check_paru():
         subprocess.run(['git', 'clone', 'https://aur.archlinux.org/paru.git', '/tmp/paru'])
         os.chdir("/tmp/paru")
         subprocess.run(['makepkg', '-si'])
-        os.chdir("-")
 
 def check_optional_packages():
     print("Checking and installing optional packages...")
@@ -81,6 +80,47 @@ def install_rofi_themes():
     else:
         print("Rofi repository already exists. Skipping installation.")
 
+def create_folders():
+    print("Creating folders...")
+    folders_to_create = [
+        os.path.expanduser("~/Downloads"),
+        os.path.expanduser("~/Pictures"),
+        os.path.expanduser("~/Pictures/wallpapers")
+    ]
+    for folder in folders_to_create:
+        os.makedirs(folder, exist_ok=True)
+
+def copy_files():
+    print("Copying files...")
+    files_to_copy = [
+        "~/dots/scripts/.bashrc"
+    ]
+    for file_path in files_to_copy:
+        file_name = os.path.basename(file_path)
+        dest_path = os.path.expanduser("~/.bashrc")
+        shutil.copy(file_path, dest_path)
+        print(f"File copied: {file_name} to {dest_path}")
+
+def copy_folders():
+    print("Copying folders...")
+    folders_to_copy = [
+        ("~/dots/wallpaper", "~/Pictures/wallpapers"),
+        ("~/dots/qtile", "~/.config"),
+        ("~/dots/dunst", "~/.config"),
+        ("~/dots/picom", "~/.config")
+    ]
+    for src, dest in folders_to_copy:
+        src = os.path.expanduser(src)
+        dest = os.path.expanduser(dest)
+        try:
+            shutil.copytree(src, dest, dirs_exist_ok=True, copy_function=shutil.copy2)
+            print(f"Folder copied: {src} to {dest}")
+        except FileExistsError:
+            print(f"Folder already exists: {dest}. Overwriting...")
+            shutil.rmtree(dest)
+            shutil.copytree(src, dest, dirs_exist_ok=True, copy_function=shutil.copy2)
+            print(f"Folder overwritten: {src} to {dest}")
+
 
 def main():
     backup_config()
@@ -92,6 +132,7 @@ def main():
     install_rofi_themes()
     create_folders()
     copy_files()
+    copy_folders()
 
 if __name__ == "__main__":
     main()
