@@ -86,6 +86,20 @@ def check_udisks2():
     else:
         print("udisks2 is already active.")
 
+def create_folders():
+    print("Creating necessary folders...")
+    folders = [
+        os.path.expanduser("~/Downloads"),
+        os.path.expanduser("~/Pictures"),
+        os.path.expanduser("~/Pictures/wallpapers")
+    ]
+    for folder in folders:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+            print(f"Created folder: {folder}")
+        else:
+            print(f"Folder already exists: {folder}")
+
 def main():
     print("Starting system configuration...")
     backup_config()  # Backup existing config
@@ -95,8 +109,8 @@ def main():
     check_ssh()
     check_nomachine()
     check_udisks2()
+    create_folders()
     print("System configuration completed.")
 
 if __name__ == "__main__":
     main()
-
