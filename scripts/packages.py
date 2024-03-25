@@ -37,7 +37,7 @@ def check_packages():
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat", "mesa", "neovim", "openssh", "feh", "mc", "alsa-utils", "python-pywal", "thunar"
     ]
-    subprocess.run(['sudo', 'pacman', '-S', '--needed'] + packages)
+    subprocess.run(['sudo', 'pacman', '-S'] + packages)
 
 def check_paru():
     print("Checking and installing Paru...")
@@ -53,7 +53,7 @@ def check_optional_packages():
         "yazi", "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio"
     ]
-    subprocess.run(['paru', '-S', '--needed'] + optional_packages)
+    subprocess.run(['paru', '-S'] + optional_packages)
 
 def check_ssh():
     print("Checking and enabling SSH service...")
