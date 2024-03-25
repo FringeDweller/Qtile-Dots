@@ -78,9 +78,9 @@ def install_rofi_themes():
         os.chdir("/tmp/rofi")
         subprocess.run(['chmod', '+x', 'setup.sh'])
         subprocess.run(['./setup.sh'])
-        os.chdir("-")  # Switch back to the previous directory
     else:
         print("Rofi repository already exists. Skipping installation.")
+
 
 def main():
     backup_config()
