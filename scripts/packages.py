@@ -93,7 +93,7 @@ def create_folders():
 def copy_files():
     print("Copying files...")
     files_to_copy = [
-        "~/dots/scripts/.bashrc"
+        os.path.expanduser("~/dots/scripts/.bashrc")
     ]
     for file_path in files_to_copy:
         file_name = os.path.basename(file_path)
