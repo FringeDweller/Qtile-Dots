@@ -102,9 +102,42 @@ def create_folders():
         else:
             print(f"Folder already exists: {folder}")
 
+def copy_folders():
+    print("Copying additional folders...")
+    folders_to_copy = {
+        "~/dots/wallpaper": "~/Pictures/wallpapers"
+    }
+    for src, dest in folders_to_copy.items():
+        src = os.path.expanduser(src)
+        dest = os.path.expanduser(dest)
+        if os.path.exists(src):
+            shutil.copytree(src, dest)
+            print(f"Copied folder {src} to {dest}")
+        else:
+            print(f"Folder {src} does not exist. Skipping...")
+
+def install_fonts():
+    print("Installing fonts...")
+    font_dir = os.path.expanduser("~/.local/share/fonts")
+    fonts_source = os.path.expanduser("~/dots/rofi/fonts")
+    subprocess.run(['cp', '-rf', f"{fonts_source}/*", font_dir])
+    subprocess.run(['fc-cache'])
+
+def install_themes():
+    print("Installing themes...")
+    rofi_dir = os.path.expanduser("~/.config/rofi")
+    themes_source = os.path.expanduser("~/dots/rofi/files")
+    if os.path.exists(rofi_dir):
+        shutil.move(rofi_dir, f"{rofi_dir}.{os.getlogin()}")
+    os.makedirs(rofi_dir)
+    subprocess.run(['cp', '-rf', f"{themes_source}/*", rofi_dir])
+    if os.path.exists(os.path.join(rofi_dir, "config.rasi")):
+        print("Successfully installed themes.")
+    else:
+        print("Failed to install themes.")
+
 def main():
-    print("Starting system configuration...")
-    backup_config()  # Backup existing config
+    backup_config()
     check_packages()
     check_paru()
     check_optional_packages()
@@ -112,8 +145,9 @@ def main():
     check_nomachine()
     check_udisks2()
     create_folders()
-    print("System configuration completed.")
+    copy_folders()
+    install_fonts()
+    install_themes()
 
 if __name__ == "__main__":
     main()
-
