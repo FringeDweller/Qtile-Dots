@@ -4,14 +4,24 @@ import shutil
 from datetime import datetime
 
 def backup_config():
+    print("Backing up qtile, dunst, and picom folders...")
     config_path = os.path.expanduser("~/.config")
     backup_folder = os.path.join(config_path, "backup")
     timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
     backup_path = os.path.join(backup_folder, f"backup_{timestamp}")
-    print(f"Copying ~/.config/ to {backup_path}...")
+    folders_to_backup = [
+        os.path.expanduser("~/.config/qtile"),
+        os.path.expanduser("~/.config/dunst"),
+        os.path.expanduser("~/.config/picom"),
+    ]
     try:
-        shutil.copytree(config_path, backup_path)
-        print("Backup completed successfully.")
+        os.makedirs(backup_path, exist_ok=True)
+        for folder in folders_to_backup:
+            if os.path.exists(folder):
+                shutil.copytree(folder, os.path.join(backup_path, os.path.basename(folder)))
+                print(f"Backed up folder: {folder} to {backup_path}")
+            else:
+                print(f"Folder {folder} does not exist. Skipping backup...")
     except shutil.Error as e:
         print(f"Error copying directory: {e}")
 
@@ -93,7 +103,8 @@ def create_folders():
     print("Creating necessary folders...")
     folders = [
         os.path.expanduser("~/Downloads"),
-        os.path.expanduser("~/Pictures")
+        os.path.expanduser("~/Pictures"),
+        os.path.expanduser("~/.config/backup"),
     ]
     for folder in folders:
         if not os.path.exists(folder):
