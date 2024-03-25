@@ -1,141 +1,113 @@
-import subprocess
 import os
 import shutil
+import subprocess
 from datetime import datetime
 
 def backup_config():
-    print("Backing up qtile, dunst, and picom folders...")
-    config_path = os.path.expanduser("~/.config")
-    backup_folder = os.path.join(config_path, "backup")
-    timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-    backup_path = os.path.join(backup_folder, f"backup_{timestamp}")
-    folders_to_backup = [
+    print("Backing up configuration files...")
+    config_files = [
+        os.path.expanduser("~/.bashrc"),
         os.path.expanduser("~/.config/qtile"),
         os.path.expanduser("~/.config/dunst"),
         os.path.expanduser("~/.config/picom"),
+        os.path.expanduser("~/.config/rofi"),
     ]
-    try:
-        os.makedirs(backup_path, exist_ok=True)
-        for folder in folders_to_backup:
-            if os.path.exists(folder):
-                shutil.copytree(folder, os.path.join(backup_path, os.path.basename(folder)))
-                print(f"Backed up folder: {folder} to {backup_path}")
-            else:
-                print(f"Folder {folder} does not exist. Skipping backup...")
-    except shutil.Error as e:
-        print(f"Error copying directory: {e}")
+
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    backup_dir = os.path.expanduser(f"~/.config/backup_{timestamp}")
+    os.makedirs(backup_dir, exist_ok=True)
+
+    for file_path in config_files:
+        if os.path.exists(file_path):
+            backup_file = os.path.join(backup_dir, os.path.basename(file_path))
+            shutil.copy(file_path, backup_file)
+            print(f"Backup created: {backup_file}")
 
 def check_packages():
-    print("Checking and installing required packages with pacman...")
-    required_packages = [
-        "git", "xorg", "xorg-xinit", "nitrogen", "picom", 
-        "dunst", "neofetch", "ttf-font-awesome", 
-        "qemu", "virt-manager", "virt-viewer", "dnsmasq", 
-        "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
-        "mesa", "neovim", "openssh", "thunar",  
-        "udisks2", "gvfs", "pavucontrol", "python-psutil", "feh", "nerd-fonts",
-        "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
-        "fzf", "zoxide", "alsa-utils", "mc", "python-pywal"
+    print("Checking and installing necessary packages...")
+    packages = [
+        "git", "xorg", "xorg-xinit", "nitrogen", "picom", "alacritty",
+        "dunst", "neofetch", "ttf-font-awesome", "zsh", "qemu-full", "virt-manager",
+        "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
+        "openbsd-netcat", "mesa", "neovim", "openssh", "feh", "mc", "alsa-utils", "netbird", "python-pywal"
     ]
-    for package in required_packages:
-        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
-        if installed.returncode != 0:
-            print(f"{package} is not installed. Installing...")
-            subprocess.run(['sudo', 'pacman', '-S', '--needed', package])
+    subprocess.run(['sudo', 'pacman', '-S', '--needed'] + packages)
 
 def check_paru():
     print("Checking and installing Paru...")
-    installed = subprocess.run(['sudo', 'pacman', '-Q', 'paru'], capture_output=True)
-    if installed.returncode != 0:
-        print("Paru is not installed. Installing...")
-        subprocess.run(['sudo', 'pacman', '-S', '--needed', 'base-devel'])
-        subprocess.run(['git', 'clone', 'https://aur.archlinux.org/paru.git'])
-        os.chdir('paru')  # Change the working directory to 'paru'
+    if subprocess.run(['pacman', '-Q', 'paru']).returncode != 0:
+        subprocess.run(['git', 'clone', 'https://aur.archlinux.org/paru.git', '/tmp/paru'])
+        os.chdir("/tmp/paru")
         subprocess.run(['makepkg', '-si'])
-        os.chdir('..')  # Change back to the parent directory
-        shutil.rmtree('paru')  # Remove the paru folder
-    else:
-        print("Paru is already installed.")
+        os.chdir("-")
 
 def check_optional_packages():
-    print("Checking and installing optional packages with Paru...")
+    print("Checking and installing optional packages...")
     optional_packages = [
-        "brave-bin", "nomachine", "qtile-extras", 
-        "python-pulsectl-asyncio", "udiskie", "vscodium-bin"
+        "vscodium-bin", "nomachine", "udisks2", "gvfs", "vscodium-bin", "pavucontrol",
+        "yazi", "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
+        "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio"
     ]
-    for package in optional_packages:
-        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
-        if installed.returncode != 0:
-            print(f"{package} is not installed. Installing using Paru...")
-            subprocess.run(['paru', '-S', package])
+    subprocess.run(['sudo', 'paru', '-S'] + optional_packages)
 
 def check_ssh():
     print("Checking and enabling SSH service...")
+    subprocess.run(['sudo', 'pacman', '-S', '--needed', 'openssh'])
     subprocess.run(['sudo', 'systemctl', 'enable', 'sshd'])
-    result = subprocess.run(['sudo', 'systemctl', 'is-active', 'sshd'], capture_output=True)
-    if result.returncode != 0:
-        print("SSH is not active. Starting SSH service...")
-        subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
-    else:
-        print("SSH is already active.")
+    subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
 
 def check_nomachine():
     print("Checking and enabling NoMachine service...")
     subprocess.run(['sudo', 'systemctl', 'enable', 'nxserver'])
     result = subprocess.run(['sudo', 'systemctl', 'is-active', 'nxserver'], capture_output=True)
     if result.returncode != 0:
-        print("NoMachine is not active. Starting NoMachine service...")
+        print("NoMachine service is not active. Starting NoMachine service...")
         subprocess.run(['sudo', 'systemctl', 'start', 'nxserver'])
     else:
-        print("NoMachine is already active.")
+        print("NoMachine service is already active.")
 
-def check_udisks2():
-    print("Checking and enabling udisks2 service...")
-    subprocess.run(['sudo', 'systemctl', 'enable', 'udisks2'])
-    result = subprocess.run(['sudo', 'systemctl', 'is-active', 'udisks2'], capture_output=True)
-    if result.returncode != 0:
-        print("udisks2 is not active. Starting udisks2 service...")
-        subprocess.run(['sudo', 'systemctl', 'start', 'udisks2'])
+def install_rofi_themes():
+    print("Installing Rofi themes...")
+    if not os.path.exists("/tmp/rofi"):
+        subprocess.run(['git', 'clone', '--depth=1', 'https://github.com/adi1090x/rofi.git', '/tmp/rofi'])
+        os.chdir("/tmp/rofi")
+        subprocess.run(['chmod', '+x', 'setup.sh'])
+        subprocess.run(['./setup.sh'])
+        os.chdir("-")  # Switch back to the previous directory
     else:
-        print("udisks2 is already active.")
+        print("Rofi repository already exists. Skipping installation.")
 
-def create_folders():
-    print("Creating necessary folders...")
-    folders = [
-        os.path.expanduser("~/Downloads"),
-        os.path.expanduser("~/Pictures"),
-        os.path.expanduser("~/.config/backup"),
-    ]
-    for folder in folders:
-        if not os.path.exists(folder):
-            os.makedirs(folder)
-            print(f"Created folder: {folder}")
-        else:
-            print(f"Folder already exists: {folder}")
+def copy_files():
+    print("Copying .bashrc file and folders...")
+    src_bashrc = os.path.expanduser("~/dots/scripts/.bashrc")
+    dest_bashrc = os.path.expanduser("~/.bashrc")
+    shutil.copy(src_bashrc, dest_bashrc)
+    print("Copied .bashrc file.")
 
-def copy_folders():
-    print("Copying additional folders...")
     folders_to_copy = {
         os.path.expanduser("~/dots/wallpaper"): os.path.expanduser("~/Pictures/wallpapers"),
         os.path.expanduser("~/dots/qtile"): os.path.expanduser("~/.config/qtile"),
         os.path.expanduser("~/dots/dunst"): os.path.expanduser("~/.config/dunst"),
         os.path.expanduser("~/dots/picom"): os.path.expanduser("~/.config/picom"),
     }
-    for src, dest in folders_to_copy.items():
-        if os.path.exists(src):
-            shutil.copytree(src, dest, dirs_exist_ok=True)
-            print(f"Copied folder {src} to {dest}")
-        else:
-            print(f"Folder {src} does not exist. Skipping...")
 
-def install_rofi_themes():
-    print("Installing Rofi themes...")
-    subprocess.run(['git', 'clone', '--depth=1', 'https://github.com/adi1090x/rofi.git'])
-    os.chdir('rofi')  # Change the working directory to 'rofi'
-    subprocess.run(['chmod', '+x', 'setup.sh'])
-    subprocess.run(['./setup.sh'])
-    os.chdir('..')  # Change back to the parent directory
-    shutil.rmtree('rofi')  # Remove the rofi folder
+    for src_folder, dest_folder in folders_to_copy.items():
+        print(f"Copying {src_folder} to {dest_folder}...")
+        if os.path.exists(dest_folder):
+            shutil.rmtree(dest_folder)
+        shutil.copytree(src_folder, dest_folder)
+        print(f"Copied {src_folder} to {dest_folder}")
+
+def create_folders():
+    print("Creating necessary folders...")
+    folders_to_create = [
+        os.path.expanduser("~/Downloads"),
+        os.path.expanduser("~/Pictures"),
+        os.path.expanduser("~/Pictures/wallpapers")
+    ]
+    for folder in folders_to_create:
+        os.makedirs(folder, exist_ok=True)
+    print("Folders created successfully.")
 
 def main():
     backup_config()
@@ -144,10 +116,9 @@ def main():
     check_optional_packages()
     check_ssh()
     check_nomachine()
-    check_udisks2()
-    create_folders()
-    copy_folders()
     install_rofi_themes()
+    create_folders()
+    copy_files()
 
 if __name__ == "__main__":
     main()
