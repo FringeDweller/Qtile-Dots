@@ -19,10 +19,10 @@ def check_packages():
     print("Checking and installing required packages with pacman...")
     required_packages = [
         "git", "xorg", "xorg-xinit", "nitrogen", "picom", 
-        "rofi", "dunst", "neofetch", "ttf-font-awesome", 
+        "dunst", "neofetch", "ttf-font-awesome", 
         "qemu", "virt-manager", "virt-viewer", "dnsmasq", 
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
-        "mesa", "neovim", "openssh",
+        "mesa", "neovim", "openssh", "thunar",  
         "udisks2", "gvfs", "pavucontrol", "python-psutil", "feh", "nerd-fonts",
         "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "alsa-utils", "mc", "python-pywal"
@@ -105,36 +105,26 @@ def create_folders():
 def copy_folders():
     print("Copying additional folders...")
     folders_to_copy = {
-        "~/dots/wallpaper": "~/Pictures/wallpapers"
+        os.path.expanduser("~/dots/wallpaper"): os.path.expanduser("~/Pictures/wallpapers"),
+        os.path.expanduser("~/dots/qtile"): os.path.expanduser("~/.config/qtile"),
+        os.path.expanduser("~/dots/dunst"): os.path.expanduser("~/.config/dunst"),
+        os.path.expanduser("~/dots/picom"): os.path.expanduser("~/.config/picom"),
     }
     for src, dest in folders_to_copy.items():
-        src = os.path.expanduser(src)
-        dest = os.path.expanduser(dest)
         if os.path.exists(src):
             shutil.copytree(src, dest)
             print(f"Copied folder {src} to {dest}")
         else:
             print(f"Folder {src} does not exist. Skipping...")
 
-def install_fonts():
-    print("Installing fonts...")
-    font_dir = os.path.expanduser("~/.local/share/fonts")
-    fonts_source = os.path.expanduser("~/dots/rofi/fonts")
-    subprocess.run(['cp', '-rf', f"{fonts_source}/*", font_dir])
-    subprocess.run(['fc-cache'])
-
-def install_themes():
-    print("Installing themes...")
-    rofi_dir = os.path.expanduser("~/.config/rofi")
-    themes_source = os.path.expanduser("~/dots/rofi/files")
-    if os.path.exists(rofi_dir):
-        shutil.move(rofi_dir, f"{rofi_dir}.{os.getlogin()}")
-    os.makedirs(rofi_dir)
-    subprocess.run(['cp', '-rf', f"{themes_source}/*", rofi_dir])
-    if os.path.exists(os.path.join(rofi_dir, "config.rasi")):
-        print("Successfully installed themes.")
-    else:
-        print("Failed to install themes.")
+def install_rofi_themes():
+    print("Installing Rofi themes...")
+    subprocess.run(['git', 'clone', '--depth=1', 'https://github.com/adi1090x/rofi.git'])
+    os.chdir('rofi')  # Change the working directory to 'rofi'
+    subprocess.run(['chmod', '+x', 'setup.sh'])
+    subprocess.run(['./setup.sh'])
+    os.chdir('..')  # Change back to the parent directory
+    shutil.rmtree('rofi')  # Remove the rofi folder
 
 def main():
     backup_config()
@@ -146,8 +136,7 @@ def main():
     check_udisks2()
     create_folders()
     copy_folders()
-    install_fonts()
-    install_themes()
+    install_rofi_themes()
 
 if __name__ == "__main__":
     main()
