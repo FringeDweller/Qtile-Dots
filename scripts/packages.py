@@ -105,9 +105,9 @@ def copy_folders():
     print("Copying folders...")
     folders_to_copy = [
         ("~/dots/wallpaper", "~/Pictures/wallpapers"),
-        ("~/dots/qtile", "~/.config"),
-        ("~/dots/dunst", "~/.config"),
-        ("~/dots/picom", "~/.config")
+        ("~/dots/qtile", "~/.config/qtile"),
+        ("~/dots/dunst", "~/.config/dunst"),
+        ("~/dots/picom", "~/.config/picom")
     ]
     for src, dest in folders_to_copy:
         src = os.path.expanduser(src)
