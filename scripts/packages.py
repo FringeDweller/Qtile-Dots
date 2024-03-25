@@ -51,7 +51,7 @@ def check_optional_packages():
     print("Checking and installing optional packages with Paru...")
     optional_packages = [
         "brave-bin", "nomachine", "qtile-extras", 
-        "python-pulsectl-asyncio", "udiskie", "vscodium"
+        "python-pulsectl-asyncio", "udiskie", "vscodium-bin"
     ]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
