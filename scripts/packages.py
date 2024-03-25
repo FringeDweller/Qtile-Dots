@@ -1,10 +1,13 @@
 import subprocess
 import os
 import shutil
+from datetime import datetime
 
 def backup_config():
     config_path = os.path.expanduser("~/.config")
-    backup_path = os.path.join(config_path, "backup")
+    backup_folder = os.path.join(config_path, "backup")
+    timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+    backup_path = os.path.join(backup_folder, f"backup_{timestamp}")
     print(f"Copying ~/.config/ to {backup_path}...")
     try:
         shutil.copytree(config_path, backup_path)
@@ -90,8 +93,7 @@ def create_folders():
     print("Creating necessary folders...")
     folders = [
         os.path.expanduser("~/Downloads"),
-        os.path.expanduser("~/Pictures"),
-        os.path.expanduser("~/Pictures/wallpapers")
+        os.path.expanduser("~/Pictures")
     ]
     for folder in folders:
         if not os.path.exists(folder):
@@ -114,3 +116,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
