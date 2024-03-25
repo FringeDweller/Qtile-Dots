@@ -51,7 +51,7 @@ def check_optional_packages():
     optional_packages = [
         "vscodium-bin", "nomachine", "udisks2", "gvfs", "vscodium-bin", "pavucontrol",
         "yazi", "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
-        "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio"
+        "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio", "qtile-extras"
     ]
     subprocess.run(['paru', '-S'] + optional_packages)
 
