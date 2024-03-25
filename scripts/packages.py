@@ -112,7 +112,7 @@ def copy_folders():
     }
     for src, dest in folders_to_copy.items():
         if os.path.exists(src):
-            shutil.copytree(src, dest)
+            shutil.copytree(src, dest, dirs_exist_ok=True)
             print(f"Copied folder {src} to {dest}")
         else:
             print(f"Folder {src} does not exist. Skipping...")
