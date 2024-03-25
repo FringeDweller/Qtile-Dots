@@ -2,14 +2,24 @@ import subprocess
 import os
 import shutil
 
+def backup_config():
+    config_path = os.path.expanduser("~/.config")
+    backup_path = os.path.join(config_path, "backup")
+    print(f"Copying ~/.config/ to {backup_path}...")
+    try:
+        shutil.copytree(config_path, backup_path)
+        print("Backup completed successfully.")
+    except shutil.Error as e:
+        print(f"Error copying directory: {e}")
+
 def check_packages():
     print("Checking and installing required packages with pacman...")
     required_packages = [
         "git", "xorg", "xorg-xinit", "nitrogen", "picom", 
-        "rofi", "kitty", "dunst", "neofetch", "ttf-font-awesome", 
+        "rofi", "dunst", "neofetch", "ttf-font-awesome", 
         "qemu", "virt-manager", "virt-viewer", "dnsmasq", 
         "bridge-utils", "libguestfs", "ebtables", "vde2", "openbsd-netcat", 
-        "mesa", "neovim", "geany", "geany-plugins", "openssh",
+        "mesa", "neovim", "openssh",
         "udisks2", "gvfs", "pavucontrol", "python-psutil", "feh", "nerd-fonts",
         "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "alsa-utils", "mc", "python-pywal"
@@ -38,7 +48,7 @@ def check_optional_packages():
     print("Checking and installing optional packages with Paru...")
     optional_packages = [
         "brave-bin", "nomachine", "qtile-extras", 
-        "python-pulsectl-asyncio", "udiskie"
+        "python-pulsectl-asyncio", "udiskie", "vscodium"
     ]
     for package in optional_packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
@@ -78,6 +88,7 @@ def check_udisks2():
 
 def main():
     print("Starting system configuration...")
+    backup_config()  # Backup existing config
     check_packages()
     check_paru()
     check_optional_packages()
@@ -88,3 +99,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
