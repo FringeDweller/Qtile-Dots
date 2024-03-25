@@ -52,7 +52,7 @@ def check_optional_packages():
         "yazi", "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio"
     ]
-    subprocess.run(['sudo', 'paru', '-S'] + optional_packages)
+    subprocess.run(['sudo', 'paru', '-S', '--needed'] + optional_packages)
 
 def check_ssh():
     print("Checking and enabling SSH service...")
