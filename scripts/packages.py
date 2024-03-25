@@ -96,12 +96,14 @@ def copy_files():
         os.path.expanduser("~/dots/scripts/.bashrc")
     ]
     for file_path in files_to_copy:
-        dest = os.path.expanduser("~/.bashrc")
+        dest = os.path.expanduser("~/.bashrc/")
         try:
             shutil.copy(file_path, dest)
             print(f"File copied: {file_path} to {dest}")
         except FileNotFoundError:
             print(f"Source file not found: {file_path}")
+        except FileExistsError:
+            print(f"File already exists at destination: {dest}")
 
 
 def copy_folders():
