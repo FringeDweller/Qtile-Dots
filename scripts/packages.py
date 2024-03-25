@@ -21,9 +21,9 @@ def backup_config():
         if os.path.exists(file_path):
             backup_file = os.path.join(backup_dir, os.path.basename(file_path))
             if os.path.isdir(file_path):
-                shutil.copytree(file_path, backup_file)
+                shutil.move(file_path, backup_file)
             else:
-                shutil.copy(file_path, backup_file)
+                shutil.move(file_path, backup_file)
             print(f"Backup created: {backup_file}")
         else:
             print(f"File not found: {file_path}")
@@ -113,14 +113,12 @@ def copy_folders():
         src = os.path.expanduser(src)
         dest = os.path.expanduser(dest)
         try:
-            shutil.copytree(src, dest, dirs_exist_ok=True, copy_function=shutil.copy2)
+            shutil.copytree(src, dest)
             print(f"Folder copied: {src} to {dest}")
+        except FileNotFoundError:
+            print(f"Source folder not found: {src}")
         except FileExistsError:
-            print(f"Folder already exists: {dest}. Overwriting...")
-            shutil.rmtree(dest)
-            shutil.copytree(src, dest, dirs_exist_ok=True, copy_function=shutil.copy2)
-            print(f"Folder overwritten: {src} to {dest}")
-
+            print(f"Folder already exists at destination: {dest}")
 
 def main():
     backup_config()
