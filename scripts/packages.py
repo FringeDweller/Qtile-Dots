@@ -11,6 +11,7 @@ def backup_config():
         os.path.expanduser("~/.config/dunst"),
         os.path.expanduser("~/.config/picom"),
         os.path.expanduser("~/.config/rofi"),
+        os.path.expanduser("~/.config/alacritty")
     ]
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -112,7 +113,8 @@ def copy_folders():
         ("~/dots/wallpaper", "~/Pictures/wallpapers"),
         ("~/dots/qtile", "~/.config/qtile"),
         ("~/dots/dunst", "~/.config/dunst"),
-        ("~/dots/picom", "~/.config/picom")
+        ("~/dots/picom", "~/.config/picom"),
+        "~/dots/alacritty", "~/.config/alacritty")
     ]
     for src, dest in folders_to_copy:
         src = os.path.expanduser(src)
