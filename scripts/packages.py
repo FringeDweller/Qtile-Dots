@@ -35,7 +35,8 @@ def check_packages():
         "git", "xorg", "xorg-xinit", "nitrogen", "picom", "alacritty",
         "dunst", "neofetch", "ttf-font-awesome", "zsh", "qemu-full", "virt-manager",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
-        "openbsd-netcat", "mesa", "neovim", "openssh", "feh", "mc", "alsa-utils", "python-pywal", "thunar"
+        "openbsd-netcat", "mesa", "neovim", "openssh", "feh", "mc", "alsa-utils", "python-pywal",
+        "thunar", "nerd-fonts"
     ]
     subprocess.run(['sudo', 'pacman', '-S'] + packages)
 
