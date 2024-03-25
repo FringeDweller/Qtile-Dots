@@ -96,10 +96,13 @@ def copy_files():
         os.path.expanduser("~/dots/scripts/.bashrc")
     ]
     for file_path in files_to_copy:
-        file_name = os.path.basename(file_path)
-        dest_path = os.path.expanduser("~/.bashrc")
-        shutil.copy(file_path, dest_path)
-        print(f"File copied: {file_name} to {dest_path}")
+        dest = os.path.expanduser("~/.bashrc")
+        try:
+            shutil.copy(file_path, dest)
+            print(f"File copied: {file_path} to {dest}")
+        except FileNotFoundError:
+            print(f"Source file not found: {file_path}")
+
 
 def copy_folders():
     print("Copying folders...")
