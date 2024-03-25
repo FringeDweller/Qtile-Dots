@@ -114,7 +114,7 @@ def copy_folders():
         ("~/dots/qtile", "~/.config/qtile"),
         ("~/dots/dunst", "~/.config/dunst"),
         ("~/dots/picom", "~/.config/picom"),
-        "~/dots/alacritty", "~/.config/alacritty")
+        ("~/dots/alacritty", "~/.config/alacritty")
     ]
     for src, dest in folders_to_copy:
         src = os.path.expanduser(src)
