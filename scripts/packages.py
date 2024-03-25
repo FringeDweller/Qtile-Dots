@@ -22,6 +22,8 @@ def backup_config():
             backup_file = os.path.join(backup_dir, os.path.basename(file_path))
             shutil.copy(file_path, backup_file)
             print(f"Backup created: {backup_file}")
+        else:
+            print(f"File not found: {file_path}")
 
 def check_packages():
     print("Checking and installing necessary packages...")
