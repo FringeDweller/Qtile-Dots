@@ -90,8 +90,7 @@ def create_folders():
     print("Creating folders...")
     folders_to_create = [
         os.path.expanduser("~/Downloads"),
-        os.path.expanduser("~/Pictures"),
-        os.path.expanduser("~/Pictures/wallpapers")
+        os.path.expanduser("~/Pictures")
     ]
     for folder in folders_to_create:
         os.makedirs(folder, exist_ok=True)
