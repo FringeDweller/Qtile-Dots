@@ -33,7 +33,7 @@ def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
         "git", "xorg", "xorg-xinit", "nitrogen", "picom", "alacritty",
-        "dunst", "neofetch", "ttf-font-awesome", "zsh", "qemu-full", "virt-manager",
+        "dunst", "neofetch", "font-awesome", "zsh", "qemu-full", "virt-manager",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat", "mesa", "neovim", "openssh", "feh", "mc", "alsa-utils", "python-pywal",
         "thunar", "nerd-fonts"
