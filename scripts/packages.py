@@ -11,7 +11,8 @@ def backup_config():
         os.path.expanduser("~/.config/dunst"),
         os.path.expanduser("~/.config/picom"),
         os.path.expanduser("~/.config/rofi"),
-        os.path.expanduser("~/.config/alacritty")
+        os.path.expanduser("~/.config/alacritty"),
+        os.path.expanduser("~/.config/nano")
     ]
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -33,10 +34,10 @@ def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
         "git", "xorg", "xorg-xinit", "nitrogen", "picom", "alacritty",
-        "dunst", "neofetch", "ttf-font-awesome", "zsh", "qemu-full", "virt-manager",
+        "dunst", "neofetch", "qemu-full", "virt-manager",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
-        "openbsd-netcat", "mesa", "neovim", "openssh", "feh", "mc", "alsa-utils", "python-pywal",
-        "thunar", "nerd-fonts"
+        "openbsd-netcat", "mesa", "openssh", "feh", "mc", "alsa-utils", "python-pywal",
+        "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting"
     ]
     subprocess.run(['sudo', 'pacman', '-S'] + packages)
 
@@ -115,7 +116,8 @@ def copy_folders():
         ("~/dots/qtile", "~/.config/qtile"),
         ("~/dots/dunst", "~/.config/dunst"),
         ("~/dots/picom", "~/.config/picom"),
-        ("~/dots/alacritty", "~/.config/alacritty")
+        ("~/dots/alacritty", "~/.config/alacritty"),
+        ("~/dots/nano", "~/.config/nano")
     ]
     for src, dest in folders_to_copy:
         src = os.path.expanduser(src)
