@@ -30,6 +30,14 @@ def backup_config():
     except shutil.Error as e:
         print(f"Error moving directory: {e}")
 
+def set_pacman_conf():
+    try:
+        cmd = 'echo "ParallelDownloads = 5" | sudo tee -a /etc/pacman.conf > /dev/null'
+        subprocess.run(cmd, shell=True, check=True)
+        print("Parallel Downloads set")
+    except subprocess.CalledProcessError as e:
+        print(f"Error setting Parallel downloads: {e}")
+
 
 def check_packages():
     print("Checking and installing necessary packages...")
@@ -170,6 +178,7 @@ def set_gtk_theme():
 
 def main():
     backup_config()
+    set_pacman_conf()
     check_packages()
     check_paru()
     check_optional_packages()
