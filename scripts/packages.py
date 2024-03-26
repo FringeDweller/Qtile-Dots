@@ -130,6 +130,14 @@ def copy_folders():
         except FileExistsError:
             print(f"Folder already exists at destination: {dest}")
 
+def make_autostart_executable():
+    autostart_file = os.path.expanduser("~/.config/qtile/autostart.sh")
+    if os.path.exists(autostart_file):
+        os.chmod(autostart_file, 0o755)  # Change file permissions to make it executable
+        print(f"Made {autostart_file} executable.")
+    else:
+        print(f"File {autostart_file} not found. Skipping...")
+
 def main():
     backup_config()
     check_packages()
@@ -141,6 +149,7 @@ def main():
     create_folders()
     copy_files()
     copy_folders()
+    make_autostart_executable()
 
 if __name__ == "__main__":
     main()
