@@ -35,7 +35,7 @@ def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
         "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3",
-        "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "netbird",
+        "dunst", "neofetch", "qemu-full", "virt-manager", "rofi",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal",
         "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
@@ -58,7 +58,7 @@ def check_paru():
 def check_optional_packages():
     print("Checking and installing optional packages...")
     optional_packages = [
-        "vscodium-bin", "udisks2", "gvfs", "vscodium-bin",
+        "vscodium-bin", "udisks2", "gvfs", "vscodium-bin", "netbird",
         "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio", "qtile-extras"
     ]
