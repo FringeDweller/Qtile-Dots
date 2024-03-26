@@ -34,10 +34,10 @@ def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
         "git", "xorg", "xorg-xinit", "nitrogen", "picom", "alacritty",
-        "dunst", "neofetch", "qemu-full", "virt-manager",
+        "dunst", "neofetch", "qemu-full", "virt-manager", "rofi",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat", "mesa", "openssh", "feh", "mc", "alsa-utils", "python-pywal",
-        "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting"
+        "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
     ]
     subprocess.run(['sudo', 'pacman', '-S'] + packages)
 
@@ -52,7 +52,7 @@ def check_optional_packages():
     print("Checking and installing optional packages...")
     optional_packages = [
         "vscodium-bin", "nomachine", "udisks2", "gvfs", "vscodium-bin", "pavucontrol",
-        "yazi", "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
+        "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio", "qtile-extras"
     ]
     subprocess.run(['paru', '-S'] + optional_packages)
