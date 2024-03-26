@@ -33,11 +33,10 @@ def backup_config():
 def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
-        "git", "xorg", "xorg-xinit", "nitrogen", "picom", "alacritty",
+        "git", "xorg", "xorg-xinit", "picom", "alacritty",
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
-        "openbsd-netcat",
-        "openssh", "feh", "mc", "alsa-utils", "python-pywal",
+        "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal",
         "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
     ]
     for package in packages:
@@ -84,14 +83,13 @@ def check_nomachine():
 
 def install_rofi_themes():
     print("Installing Rofi themes...")
-    if not os.path.exists("/tmp/rofi"):
-        subprocess.run(['git', 'clone', '--depth=1', 'https://github.com/adi1090x/rofi.git', '/tmp/rofi'])
-        os.chdir("/tmp/rofi")
-        subprocess.run(['chmod', '+x', 'setup.sh'])
-        subprocess.run(['./setup.sh'])
-    else:
-        print("Rofi repository already exists. Skipping installation.")
-
+    subprocess.run(['git', 'clone', '--depth=1', 'https://github.com/adi1090x/rofi.git'])
+    os.chdir('rofi')  # Change the working directory to 'rofi'
+    subprocess.run(['chmod', '+x', 'setup.sh'])
+    subprocess.run(['./setup.sh'])
+    os.chdir('..')  # Change back to the parent directory
+    shutil.rmtree('rofi')  # Remove the rofi folder
+    
 def create_folders():
     print("Creating folders...")
     folders_to_create = [
