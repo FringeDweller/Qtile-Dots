@@ -4,8 +4,12 @@ import subprocess
 from datetime import datetime
 
 def backup_config():
-    print("Backing up configuration files...")
-    config_files = [
+    print("Backing up qtile, dunst, and picom folders...")
+    config_path = os.path.expanduser("~/.config")
+    backup_folder = os.path.join(config_path, "backup")
+    timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+    backup_path = os.path.join(backup_folder, f"backup_{timestamp}")
+    folders_to_backup = [
         os.path.expanduser("~/.bashrc"),
         os.path.expanduser("~/.config/qtile"),
         os.path.expanduser("~/.config/dunst"),
@@ -14,21 +18,17 @@ def backup_config():
         os.path.expanduser("~/.config/alacritty"),
         os.path.expanduser("~/.config/nano")
     ]
-
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    backup_dir = os.path.expanduser(f"~/.config/backup_{timestamp}")
-    os.makedirs(backup_dir, exist_ok=True)
-
-    for file_path in config_files:
-        if os.path.exists(file_path):
-            backup_file = os.path.join(backup_dir, os.path.basename(file_path))
-            if os.path.isdir(file_path):
-                shutil.move(file_path, backup_file)
+    try:
+        os.makedirs(backup_path, exist_ok=True)
+        for folder in folders_to_backup:
+            if os.path.exists(folder):
+                shutil.move(folder, os.path.join(backup_path, os.path.basename(folder)))
+                print(f"Moved folder: {folder} to {backup_path}")
             else:
-                shutil.move(file_path, backup_file)
-            print(f"Backup created: {backup_file}")
-        else:
-            print(f"File not found: {file_path}")
+                print(f"Folder {folder} does not exist. Skipping backup...")
+    except shutil.Error as e:
+        print(f"Error moving directory: {e}")
+
 
 def check_packages():
     print("Checking and installing necessary packages...")
