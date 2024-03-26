@@ -7,6 +7,5 @@ PS1='[\u@\h \W]\$ '
 
 export EDITOR='nano'
 export VISUAL='nano'
-export GTK_THEME=Adwaita:dark
 # My Aliases
 #
