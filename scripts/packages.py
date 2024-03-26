@@ -76,6 +76,16 @@ def check_ssh():
     subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
 
 
+def install_netbird():
+    try:
+        print("Installing Netbird...")
+        subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh'], check=True, stdout=subprocess.PIPE)
+        subprocess.run(['sudo', 'sh', '/tmp/install.sh'], check=True)
+        print("Netbird installed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error installing Netbird: {e}")
+
+
 def install_rofi_themes():
     print("Installing Rofi themes...")
     subprocess.run(['git', 'clone', '--depth=1', 'https://github.com/adi1090x/rofi.git'])
@@ -157,6 +167,7 @@ def main():
     check_paru()
     check_optional_packages()
     check_ssh()
+    install_netbird()
     install_rofi_themes()
     create_folders()
     copy_files()
