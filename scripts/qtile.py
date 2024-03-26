@@ -32,8 +32,8 @@ def backup_config():
 
 def edit_line(file_path, line_number, comment=True):
     try:
-        command = ["sudo", "sed", "-i", f"{line_number}s/^{'#' if comment else ''}/{'#' if not comment else ''}", file_path]
-        print("Executing command:", " ".join(command))  # Print the command being executed
+        comment_str = '#' if comment else ''  # Determine whether to comment or uncomment
+        command = ["sudo", "sed", "-i", f"{line_number}s/^\\({comment_str}\\)/\\1/", file_path]
         subprocess.run(command, check=True)
         print(f"Line {line_number} {'commented' if comment else 'uncommented'} successfully.")
     except subprocess.CalledProcessError as e:
