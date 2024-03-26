@@ -35,7 +35,7 @@ def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
         "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3",
-        "dunst", "neofetch", "qemu-full", "virt-manager", "rofi",
+        "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "netbird",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal",
         "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
@@ -74,17 +74,6 @@ def check_ssh():
     subprocess.run(['sudo', 'pacman', '-S', '--needed', 'openssh'])
     subprocess.run(['sudo', 'systemctl', 'enable', 'sshd'])
     subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
-
-
-def install_netbird():
-    try:
-        print("Installing Netbird...")
-        subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh', '-o', '/tmp/install.sh'], check=True)
-        subprocess.run(['sudo', 'sh', '/tmp/install.sh'], check=True)
-        print("Netbird installed successfully.")
-        os.remove('/tmp/install.sh')  # Remove the temporary installation script
-    except subprocess.CalledProcessError as e:
-        print(f"Error installing Netbird: {e}")
 
 
 def install_rofi_themes():
@@ -168,7 +157,6 @@ def main():
     check_paru()
     check_optional_packages()
     check_ssh()
-    install_netbird()
     install_rofi_themes()
     create_folders()
     copy_files()
