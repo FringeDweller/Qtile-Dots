@@ -145,12 +145,11 @@ def make_autostart_executable():
 
 def set_gtk_theme():
     try:
-        with open('/etc/environment', 'a') as f:
-            f.write('export GTK_THEME=Adwaita:dark\n')
+        cmd = 'echo "export GTK_THEME=Adwaita:dark" | sudo tee -a /etc/environment > /dev/null'
+        subprocess.run(cmd, shell=True, check=True)
         print("GTK theme set to Adwaita:dark.")
-    except Exception as e:
+    except subprocess.CalledProcessError as e:
         print(f"Error setting GTK theme: {e}")
-
 
 def main():
     backup_config()
