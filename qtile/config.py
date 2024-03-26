@@ -188,7 +188,7 @@ screens = [
                 widget.CPU(**decor),
 		widget.Spacer(length=10),
                 #widget.Clipboard(background="888888", **powerline),
-                widget.Volume(fmt = '🕫  Vol: {}', **decor),
+                widget.Volume(fmt = '󰕾 Vol: {}', **decor),
 		widget.Spacer(length=10),
                 #widget.TextBox("default config", name="default"),
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
