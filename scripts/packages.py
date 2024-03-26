@@ -79,9 +79,10 @@ def check_ssh():
 def install_netbird():
     try:
         print("Installing Netbird...")
-        subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh'], check=True, stdout=subprocess.PIPE)
+        subprocess.run(['curl', '-fsSL', 'https://pkgs.netbird.io/install.sh', '-o', '/tmp/install.sh'], check=True)
         subprocess.run(['sudo', 'sh', '/tmp/install.sh'], check=True)
         print("Netbird installed successfully.")
+        os.remove('/tmp/install.sh')  # Remove the temporary installation script
     except subprocess.CalledProcessError as e:
         print(f"Error installing Netbird: {e}")
 
