@@ -143,6 +143,15 @@ def make_autostart_executable():
         print(f"File {autostart_file} not found. Skipping...")
 
 
+def set_gtk_theme():
+    try:
+        with open('/etc/environment', 'a') as f:
+            f.write('export GTK_THEME=Adwaita:dark\n')
+        print("GTK theme set to Adwaita:dark.")
+    except Exception as e:
+        print(f"Error setting GTK theme: {e}")
+
+
 def main():
     backup_config()
     check_packages()
@@ -154,6 +163,7 @@ def main():
     copy_files()
     copy_folders()
     make_autostart_executable()
+    set_gtk_theme()
 
 if __name__ == "__main__":
     main()
