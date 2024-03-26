@@ -36,7 +36,8 @@ def check_packages():
         "git", "xorg", "xorg-xinit", "nitrogen", "picom", "alacritty",
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi",
         "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
-        "openbsd-netcat", "mesa", "openssh", "feh", "mc", "alsa-utils", "python-pywal",
+        "openbsd-netcat",
+        "openssh", "feh", "mc", "alsa-utils", "python-pywal",
         "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
     ]
     for package in packages:
