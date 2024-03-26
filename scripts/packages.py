@@ -39,7 +39,11 @@ def check_packages():
         "openbsd-netcat", "mesa", "openssh", "feh", "mc", "alsa-utils", "python-pywal",
         "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
     ]
-    subprocess.run(['sudo', 'pacman', '-S'] + packages)
+    for package in packages:
+        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
+        if installed.returncode != 0:
+            print(f"{package} is not installed. Installing...")
+            subprocess.run(['sudo', 'pacman', '-S', package])
 
 def check_paru():
     print("Checking and installing Paru...")
@@ -55,7 +59,11 @@ def check_optional_packages():
         "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep",
         "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio", "qtile-extras"
     ]
-    subprocess.run(['paru', '-S'] + optional_packages)
+    for package in optional_packages:
+        installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
+        if installed.returncode != 0:
+            print(f"{package} is not installed. Installing...")
+            subprocess.run(['paru', '-S', package])
 
 def check_ssh():
     print("Checking and enabling SSH service...")
