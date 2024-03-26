@@ -1,4 +1,4 @@
-import os
+,import os
 import shutil
 import subprocess
 from datetime import datetime
@@ -43,7 +43,7 @@ def check_packages():
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
-            subprocess.run(['sudo', 'pacman', '-S', package])
+            subprocess.run(['sudo', 'pacman', '-S', '--needed', package])
 
 def check_paru():
     print("Checking and installing Paru...")
@@ -63,7 +63,7 @@ def check_optional_packages():
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
-            subprocess.run(['paru', '-S', package])
+            subprocess.run(['paru', '-S', "--needed", package])
 
 def check_ssh():
     print("Checking and enabling SSH service...")
