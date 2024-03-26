@@ -43,8 +43,8 @@ def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
         "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3",
-        "dunst", "neofetch", "qemu-full", "virt-manager", "rofi",
-        "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
+        "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "pavucontrol", "pipewire-alsa",
+        "pipewire-pulse", "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal",
         "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
     ]
