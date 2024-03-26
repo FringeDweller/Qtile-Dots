@@ -3,6 +3,7 @@ import shutil
 import subprocess
 from datetime import datetime
 
+
 def backup_config():
     print("Backing up qtile, dunst, and picom folders...")
     config_path = os.path.expanduser("~/.config")
@@ -45,12 +46,14 @@ def check_packages():
             print(f"{package} is not installed. Installing...")
             subprocess.run(['sudo', 'pacman', '-S', '--needed', package])
 
+
 def check_paru():
     print("Checking and installing Paru...")
     if subprocess.run(['pacman', '-Q', 'paru']).returncode != 0:
         subprocess.run(['git', 'clone', 'https://aur.archlinux.org/paru.git', '/tmp/paru'])
         os.chdir("/tmp/paru")
         subprocess.run(['makepkg', '-si'])
+
 
 def check_optional_packages():
     print("Checking and installing optional packages...")
@@ -65,21 +68,13 @@ def check_optional_packages():
             print(f"{package} is not installed. Installing...")
             subprocess.run(['paru', '-S', "--needed", package])
 
+
 def check_ssh():
     print("Checking and enabling SSH service...")
     subprocess.run(['sudo', 'pacman', '-S', '--needed', 'openssh'])
     subprocess.run(['sudo', 'systemctl', 'enable', 'sshd'])
     subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
 
-def check_nomachine():
-    print("Checking and enabling NoMachine service...")
-    subprocess.run(['sudo', 'systemctl', 'enable', 'nxserver'])
-    result = subprocess.run(['sudo', 'systemctl', 'is-active', 'nxserver'], capture_output=True)
-    if result.returncode != 0:
-        print("NoMachine service is not active. Starting NoMachine service...")
-        subprocess.run(['sudo', 'systemctl', 'start', 'nxserver'])
-    else:
-        print("NoMachine service is already active.")
 
 def install_rofi_themes():
     print("Installing Rofi themes...")
@@ -90,6 +85,7 @@ def install_rofi_themes():
     os.chdir('..')  # Change back to the parent directory
     shutil.rmtree('rofi')  # Remove the rofi folder
     
+
 def create_folders():
     print("Creating folders...")
     folders_to_create = [
@@ -99,6 +95,7 @@ def create_folders():
     ]
     for folder in folders_to_create:
         os.makedirs(folder, exist_ok=True)
+
 
 def copy_files():
     print("Copying files...")
@@ -137,6 +134,7 @@ def copy_folders():
         except FileExistsError:
             print(f"Folder already exists at destination: {dest}")
 
+
 def make_autostart_executable():
     autostart_file = os.path.expanduser("~/.config/qtile/autostart.sh")
     if os.path.exists(autostart_file):
@@ -145,13 +143,13 @@ def make_autostart_executable():
     else:
         print(f"File {autostart_file} not found. Skipping...")
 
+
 def main():
     backup_config()
     check_packages()
     check_paru()
     check_optional_packages()
     check_ssh()
-    check_nomachine()
     install_rofi_themes()
     create_folders()
     copy_files()
