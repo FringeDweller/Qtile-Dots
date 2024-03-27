@@ -31,25 +31,18 @@ def backup_config():
 
 
 
-def edit_line(file_path, line_number, comment=True):
+def overwrite_pacman_conf():
     try:
-        comment_str = '#' if comment else ''  # Determine whether to comment or uncomment
+        # Path to source and destination files
+        source_file = os.path.expanduser("~/dots/scripts/pacman.conf")
+        destination_file = "/etc/pacman.conf"
+
+        # Use sudo to overwrite the destination file with the content of the source file
+        subprocess.run(['sudo', 'cp', source_file, destination_file], check=True)
+        print(f"File {destination_file} overwritten successfully with sudo.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error overwriting file: {e}")
         
-        # Read the content of the file
-        with open(file_path, 'r') as file:
-            lines = file.readlines()
-
-        # Modify the specified line
-        lines[line_number - 1] = f"{comment_str}{lines[line_number - 1].lstrip('#')}\n" if comment else f"{lines[line_number - 1]}\n"
-
-        # Write back to the file using sudo
-        with open(file_path, 'w') as file:
-            file.writelines(lines)
-
-        print(f"Line {line_number} {'commented' if comment else 'uncommented'} successfully.")
-    except Exception as e:
-        print(f"Error editing line: {e}")
-
 
 def check_packages():
     print("Checking and installing necessary packages...")
@@ -198,7 +191,7 @@ def set_gtk_theme(theme_name):
 
 def main():
     backup_config()
-    edit_line("/etc/pacman.conf", 37, comment=False)
+    overwrite_pacman_conf()
     check_packages()
     check_paru()
     check_optional_packages()
