@@ -43,13 +43,12 @@ def edit_line(file_path, line_number, comment=True):
         lines[line_number - 1] = f"{comment_str}{lines[line_number - 1].lstrip('#')}\n" if comment else f"{lines[line_number - 1]}\n"
 
         # Write back to the file using sudo
-        with subprocess.Popen(['sudo', 'tee', file_path], stdin=subprocess.PIPE) as proc:
-            proc.communicate(''.join(lines).encode())
+        with open(file_path, 'w') as file:
+            file.writelines(lines)
 
         print(f"Line {line_number} {'commented' if comment else 'uncommented'} successfully.")
     except Exception as e:
         print(f"Error editing line: {e}")
-
 
 
 def check_packages():
