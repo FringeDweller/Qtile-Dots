@@ -162,7 +162,7 @@ extension_defaults = widget_defaults.copy()
 
 decor = {
     "decorations": [
-        RectDecoration(colour="#353f4f", radius=10, filled=True, padding_y=4, group=False)
+        RectDecoration(colour="#353f4f", radius=5, filled=True, padding_y=4, group=False)
     ],
     "padding": 10,
 }
