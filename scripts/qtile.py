@@ -47,7 +47,7 @@ def overwrite_pacman_conf():
 def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
-        "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3",
+        "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3", "arc-gtk-theme",
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "pavucontrol", "pipewire-alsa",
         "pipewire-pulse", "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal",
@@ -203,7 +203,7 @@ def main():
     copy_files()
     copy_folders()
     make_autostart_executable()
-    set_gtk_theme("Adwaita:dark")
+    set_gtk_theme("Arc-Dark")
 
 if __name__ == "__main__":
     main()
