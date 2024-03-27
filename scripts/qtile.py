@@ -169,11 +169,19 @@ def make_autostart_executable():
         print(f"File {autostart_file} not found. Skipping...")
 
 
-def set_gtk_theme():
+def set_gtk_theme(theme_name):
     try:
-        cmd = 'echo "export GTK_THEME=Adwaita:dark" | sudo tee -a /etc/environment > /dev/null'
-        subprocess.run(cmd, shell=True, check=True)
-        print("GTK theme set to Adwaita:dark.")
+        # Check if entry exists
+        grep_command = ["grep", "-q", f"GTK_THEME={theme_name}", "/etc/environment"]
+        grep_process = subprocess.run(grep_command, capture_output=True, text=True)
+        if grep_process.returncode == 0:
+            print(f"The GTK_THEME={theme_name} entry already exists.")
+            return
+
+        # Add entry
+        echo_command = ["echo", f"GTK_THEME={theme_name} | sudo tee -a /etc/environment"]
+        subprocess.run(echo_command, check=True, shell=True)
+        print(f"GTK_THEME={theme_name} added successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error setting GTK theme: {e}")
 
@@ -191,7 +199,7 @@ def main():
     copy_files()
     copy_folders()
     make_autostart_executable()
-    set_gtk_theme()
+    set_gtk_theme("Adwaita:dark")
 
 if __name__ == "__main__":
     main()
