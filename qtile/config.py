@@ -38,6 +38,7 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "brave"
 filemanager = "thunar"
+ide = "vscodium"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -75,6 +76,7 @@ keys = [
     Key([mod, "shift"], "Return", lazy.spawn("rofi -show drun"), desc='Run Launcher'),
     Key([mod], "b", lazy.spawn(browser), desc='Web browser'),
     Key([mod], "m", lazy.spawn(filemanager), desc='File Manager'),
+    Key([mod], "e", lazy.spawn(ide), desc='IDE'),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
