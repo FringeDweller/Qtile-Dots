@@ -172,15 +172,15 @@ def make_autostart_executable():
 def set_gtk_theme(theme_name):
     try:
         # Check if entry exists
-        grep_command = ["grep", "-q", f"GTK_THEME={theme_name}", "/etc/environment"]
-        grep_process = subprocess.run(grep_command, capture_output=True, text=True)
+        grep_command = f"grep -q 'GTK_THEME={theme_name}' /etc/environment"
+        grep_process = subprocess.run(grep_command, shell=True, capture_output=True, text=True)
         if grep_process.returncode == 0:
             print(f"The GTK_THEME={theme_name} entry already exists.")
             return
 
         # Add entry
-        echo_command = ["echo", f"GTK_THEME={theme_name} | sudo tee -a /etc/environment"]
-        subprocess.run(echo_command, check=True, shell=True)
+        echo_command = f"echo 'GTK_THEME={theme_name}' | sudo tee -a /etc/environment"
+        subprocess.run(echo_command, shell=True, check=True)
         print(f"GTK_THEME={theme_name} added successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error setting GTK theme: {e}")
