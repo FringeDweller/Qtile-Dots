@@ -22,7 +22,7 @@ def backup_config():
         os.makedirs(backup_path, exist_ok=True)
         for folder in folders_to_backup:
             if os.path.exists(folder):
-                shutil.move(folder, os.path.join(backup_path, os.path.basename(folder)))
+                shutil.move(folder, backup_path)
                 print(f"Moved folder: {folder} to {backup_path}")
             else:
                 print(f"Folder {folder} does not exist. Skipping backup...")
