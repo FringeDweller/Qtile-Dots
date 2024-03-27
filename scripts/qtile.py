@@ -28,24 +28,28 @@ def backup_config():
                 print(f"Folder {folder} does not exist. Skipping backup...")
     except shutil.Error as e:
         print(f"Error moving directory: {e}")
-      
+
+
 
 def edit_line(file_path, line_number, comment=True):
     try:
         comment_str = '#' if comment else ''  # Determine whether to comment or uncomment
+        
+        # Read the content of the file
         with open(file_path, 'r') as file:
             lines = file.readlines()
 
-        # Edit the line
-        lines[line_number - 1] = lines[line_number - 1].lstrip('#') if comment else f"#{lines[line_number - 1]}"
+        # Modify the specified line
+        lines[line_number - 1] = f"{comment_str}{lines[line_number - 1].lstrip('#')}\n" if comment else f"{lines[line_number - 1]}\n"
 
-        # Write back to the file
-        with open(file_path, 'w') as file:
-            file.writelines(lines)
+        # Write back to the file using sudo
+        with subprocess.Popen(['sudo', 'tee', file_path], stdin=subprocess.PIPE) as proc:
+            proc.communicate(''.join(lines).encode())
 
         print(f"Line {line_number} {'commented' if comment else 'uncommented'} successfully.")
     except Exception as e:
         print(f"Error editing line: {e}")
+
 
 
 def check_packages():
