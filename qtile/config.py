@@ -173,9 +173,10 @@ screens = [
         wallpaper_mode='fill',
         top=bar.Bar(
             [
-                #widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Spacer(length=10),
+        #widget.CurrentLayout(),
+        widget.Spacer(length=10),
+        widget.GroupBox(),
+        widget.Spacer(length=10),
 		widget.Prompt(**decor),
 		widget.Spacer(bar.STRETCH),
                 #widget.WindowName(),
@@ -204,6 +205,7 @@ screens = [
                 widget.Clock(format="%a %d-%m-%Y %I:%M %p", **decor),
 		widget.Spacer(length=10),
                 widget.QuickExit(default_text='[X]', countdown_format='[{}]', **decor),
+        widget.Spacer(length=10),
             ],
             24,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
