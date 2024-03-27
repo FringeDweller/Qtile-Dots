@@ -10,7 +10,7 @@ def backup_config():
     timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
     backup_path = os.path.join(backup_folder, f"backup_{timestamp}")
     folders_to_backup = [
-        os.path.expanduser("~/.bashrc"),
+        os.path.expanduser("~/.config/.bashrc"),
         os.path.expanduser("~/.config/qtile"),
         os.path.expanduser("~/.config/dunst"),
         os.path.expanduser("~/.config/picom"),
