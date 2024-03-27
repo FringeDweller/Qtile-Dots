@@ -71,7 +71,7 @@ def check_paru():
 def check_optional_packages():
     print("Checking and installing optional packages...")
     optional_packages = [
-        "vscodium-bin", "udisks2", "gvfs", "vscodium-bin", "netbird-bin", "nomachine"
+        "vscodium-bin", "udisks2", "gvfs", "vscodium-bin", "netbird-bin", "nomachine",
         "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep", "pika-backup",
         "fzf", "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio", "qtile-extras"
     ]
