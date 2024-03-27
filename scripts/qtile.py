@@ -33,12 +33,11 @@ def backup_config():
 def edit_line(file_path, line_number, comment=True):
     try:
         comment_str = '#' if comment else ''  # Determine whether to comment or uncomment
-        command = ["sudo", "sed", "-i", f"{line_number}s/^\\({comment_str}\\)/\\1/", file_path]
-        subprocess.run(command, check=True)
+        command = f"sudo sed -i '{line_number}s/^\\({comment_str}\\)/\\1/' {file_path}"
+        subprocess.run(command, shell=True, check=True)
         print(f"Line {line_number} {'commented' if comment else 'uncommented'} successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error editing line: {e}")
-
 
 def check_packages():
     print("Checking and installing necessary packages...")
