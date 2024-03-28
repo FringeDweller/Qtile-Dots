@@ -16,9 +16,7 @@ def backup_config():
         os.path.expanduser("~/.config/picom"),
         os.path.expanduser("~/.config/rofi"),
         os.path.expanduser("~/.config/alacritty"),
-        os.path.expanduser("~/.config/nano"),
-        os.path.expanduser("/etc/libvirt/libvirtd.conf"),
-        os.path.expanduser("/etc/pacman.conf")
+        os.path.expanduser("~/.config/nano")
 
     ]
     try:
