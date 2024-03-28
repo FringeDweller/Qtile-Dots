@@ -123,20 +123,20 @@ for i in groups:
     )
 
 Layout_theme = {
-    "border_width": 2,
-    "margin": 10,
+    "border_width": 1,
+    "margin": 5,
     "border_focus": "787a79",
     "border_normal": "474a48"
     }
 
 layouts = [
-    # layout.Columns(border_focus_stack=["#808387", "#4e4f52"], border_width=1),
+    layout.Columns(**Layout_theme),
     # layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(**Layout_theme),
+    #layout.MonadTall(**Layout_theme),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
