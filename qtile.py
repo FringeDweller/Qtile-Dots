@@ -139,7 +139,7 @@ def copy_files():
         dest = os.path.expanduser(dest)
     try:
         subprocess.run(['sudo', 'cp', src, dest], check=True)
-        print(f"File {destination_file} overwritten successfully with sudo.")
+        print(f"File {dest} overwritten successfully with sudo.")
     except subprocess.CalledProcessError as e:
         print(f"Error overwriting file: {e}")
 
