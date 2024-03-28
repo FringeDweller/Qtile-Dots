@@ -166,6 +166,22 @@ def copy_folders():
             print(f"Folder already exists at destination: {dest}")
 
 
+def setup_kvm_libvirt():
+    try:
+        # Add current user to kvm group
+        subprocess.run(['sudo', 'usermod', '-a', '-G', 'kvm', '$(whoami)'], check=True)
+
+        # Add current user to libvirt group
+        subprocess.run(['sudo', 'usermod', '-a', '-G', 'libvirt', '$(whoami)'], check=True)
+
+        # Start a new group session for libvirt
+        subprocess.run(['newgrp', 'libvirt'], check=True)
+
+        print("KVM and libvirt setup completed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error setting up KVM and libvirt: {e}")
+
+
 def make_autostart_executable():
     autostart_file = os.path.expanduser("~/.config/qtile/autostart.sh")
     if os.path.exists(autostart_file):
@@ -204,6 +220,7 @@ def main():
     create_folders()
     copy_files()
     copy_folders()
+    setup_kvm_libvirt()
     make_autostart_executable()
     set_gtk_theme("Arc-Dark")
 
