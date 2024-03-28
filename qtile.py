@@ -50,7 +50,7 @@ def overwrite_pacman_conf():
 def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
-        "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3", "arc-gtk-theme",
+        "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3", "arc-gtk-theme", "swtpm",
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "pavucontrol", "pipewire-alsa",
         "pipewire-pulse", "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal", "variety",
