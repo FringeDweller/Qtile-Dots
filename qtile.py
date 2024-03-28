@@ -177,9 +177,6 @@ def setup_kvm_libvirt():
         subprocess.run(['sudo', 'usermod', '-a', '-G', 'kvm', username], check=True)
         subprocess.run(['sudo', 'usermod', '-a', '-G', 'libvirt', username], check=True)
 
-        # Switch to the libvirt group
-        subprocess.run(['newgrp', 'libvirt'], check=True)
-
         # Enable and start the virtqemud service
         subprocess.run(['sudo', 'systemctl', 'enable', 'libvirtd'], check=True)
         subprocess.run(['sudo', 'systemctl', 'start', 'libvirtd'], check=True)
