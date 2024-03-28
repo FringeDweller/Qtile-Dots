@@ -137,14 +137,11 @@ def copy_files():
     for src, dest in files_to_copy:
         src = os.path.expanduser(src)
         dest = os.path.expanduser(dest)
-        try:
-            shutil.copy(src, dest)
-            print(f"Folder copied: {src} to {dest}")
-        except FileNotFoundError:
-            print(f"Source folder not found: {src}")
-        except FileExistsError:
-            print(f"Folder already exists at destination: {dest}")
-
+    try:
+        subprocess.run(['sudo', 'cp', src, dest], check=True)
+        print(f"File {destination_file} overwritten successfully with sudo.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error overwriting file: {e}")
 
 
 def copy_folders():
