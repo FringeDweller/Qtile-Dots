@@ -181,8 +181,8 @@ def setup_kvm_libvirt():
         subprocess.run(['newgrp', 'libvirt'], check=True)
 
         # Enable and start the virtqemud service
-        subprocess.run(['sudo', 'systemctl', 'enable', 'virtqemud'], check=True)
-        subprocess.run(['sudo', 'systemctl', 'start', 'virtqemud'], check=True)
+        subprocess.run(['sudo', 'systemctl', 'enable', 'libvirtd.service'], check=True)
+        subprocess.run(['sudo', 'systemctl', 'start', 'libvirtd.service'], check=True)
 
         print("KVM and libvirt setup successfully.")
     except subprocess.CalledProcessError as e:
