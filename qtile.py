@@ -172,12 +172,22 @@ def setup_kvm_libvirt():
     try:
         # Get the current username
         username = os.getlogin()
+
         # Add the current user to the kvm and libvirt groups
         subprocess.run(['sudo', 'usermod', '-a', '-G', 'kvm', username], check=True)
         subprocess.run(['sudo', 'usermod', '-a', '-G', 'libvirt', username], check=True)
+
+        # Switch to the libvirt group
+        subprocess.run(['newgrp', 'libvirt'], check=True)
+
+        # Enable and start the virtqemud service
+        subprocess.run(['sudo', 'systemctl', 'enable', 'virtqemud'], check=True)
+        subprocess.run(['sudo', 'systemctl', 'start', 'virtqemud'], check=True)
+
         print("KVM and libvirt setup successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error setting up KVM and libvirt: {e}")
+
 
 
 def make_autostart_executable():
