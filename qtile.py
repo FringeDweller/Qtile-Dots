@@ -3,6 +3,26 @@ import shutil
 import subprocess
 from datetime import datetime
 
+import subprocess
+
+def create_bridge_interface():
+    """
+    Create a bridge interface named 'br0' and add the 'eno1' interface to it.
+    """
+    # Create a bridge interface named 'br0'
+    create_bridge_cmd = "ip link add name br0 type bridge".split()
+    subprocess.run(create_bridge_cmd, check=True)
+
+    # Set the 'br0' interface up
+    set_bridge_up_cmd = "ip link set dev br0 up".split()
+    subprocess.run(set_bridge_up_cmd, check=True)
+
+    # Add the 'eno1' interface to the 'br0' bridge
+    add_eno1_to_bridge_cmd = "ip link set eno1 master br0".split()
+    subprocess.run(add_eno1_to_bridge_cmd, check=True)
+
+    print("Bridge interface 'br0' created and 'eno1' added to it.")
+
 def backup_config():
     print("Backing up qtile, dunst, and picom folders...")
     config_path = os.path.expanduser("~/.config")
@@ -204,6 +224,7 @@ def set_gtk_theme(theme_name):
         print(f"Error setting GTK theme: {e}")
 
 def main():
+    create_bridge_interface()
     backup_config()
     overwrite_pacman_conf()
     check_packages()
