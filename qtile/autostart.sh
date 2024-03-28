@@ -2,3 +2,4 @@
 
 picom --daemon &
 udiskie &
+variety &
