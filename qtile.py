@@ -166,7 +166,7 @@ def copy_folders():
             print(f"Folder already exists at destination: {dest}")
 
 
-def setup_kvm_and_libvirt():
+def setup_kvm_libvirt():
     try:
         # Get the current username
         username = os.getlogin()
