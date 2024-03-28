@@ -176,7 +176,7 @@ def setup_kvm_libvirt():
         subprocess.run(['sudo', 'usermod', '-a', '-G', 'libvirt', username], check=True)
 
         # Switch to the libvirt group
-        subprocess.run(['newgrp', 'libvirt'], check=True)
+        #subprocess.run(['newgrp', 'libvirt'], check=True)
 
         print("KVM and libvirt setup successfully.")
     except subprocess.CalledProcessError as e:
