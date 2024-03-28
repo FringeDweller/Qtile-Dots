@@ -58,7 +58,7 @@ def check_packages():
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
-            subprocess.run(['sudo', 'pacman', '-S', '--needed', package])
+            subprocess.run(['sudo', 'pacman', '-S', '--needed', '--noconfirm', package])
 
 
 def check_paru():
@@ -80,7 +80,7 @@ def check_optional_packages():
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
-            subprocess.run(['paru', '-S', "--needed", package])
+            subprocess.run(['paru', '-S', "--needed", '--noconfirm', package])
 
 
 def check_ssh():
