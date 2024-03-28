@@ -134,7 +134,7 @@ def copy_files():
         ("~/dots/bash/.bashrc", "~/.config"),
         ("~/dots/libvirt/libvirtd.conf", "/etc/libvirt/")
     ]
-    for src, dest in folders_to_copy:
+    for src, dest in files_to_copy:
         src = os.path.expanduser(src)
         dest = os.path.expanduser(dest)
         try:
