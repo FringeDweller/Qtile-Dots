@@ -166,18 +166,19 @@ def copy_folders():
             print(f"Folder already exists at destination: {dest}")
 
 
-def setup_kvm_libvirt():
+def setup_kvm_and_libvirt():
     try:
-        # Add current user to kvm group
-        subprocess.run(['sudo', 'usermod', '-a', '-G', 'kvm', '$(whoami)'], check=True)
+        # Get the current username
+        username = os.getlogin()
 
-        # Add current user to libvirt group
-        subprocess.run(['sudo', 'usermod', '-a', '-G', 'libvirt', '$(whoami)'], check=True)
+        # Add the current user to the kvm and libvirt groups
+        subprocess.run(['sudo', 'usermod', '-a', '-G', 'kvm', username], check=True)
+        subprocess.run(['sudo', 'usermod', '-a', '-G', 'libvirt', username], check=True)
 
-        # Start a new group session for libvirt
+        # Switch to the libvirt group
         subprocess.run(['newgrp', 'libvirt'], check=True)
 
-        print("KVM and libvirt setup completed successfully.")
+        print("KVM and libvirt setup successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error setting up KVM and libvirt: {e}")
 
