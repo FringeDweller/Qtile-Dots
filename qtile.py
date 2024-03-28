@@ -16,7 +16,10 @@ def backup_config():
         os.path.expanduser("~/.config/picom"),
         os.path.expanduser("~/.config/rofi"),
         os.path.expanduser("~/.config/alacritty"),
-        os.path.expanduser("~/.config/nano")
+        os.path.expanduser("~/.config/nano"),
+        os.path.expanduser("/etc/libvirt/libvirtd.conf"),
+        os.path.expanduser("/etc/pacman.conf")
+
     ]
     try:
         os.makedirs(backup_path, exist_ok=True)
@@ -126,20 +129,24 @@ def create_folders():
         os.makedirs(folder, exist_ok=True)
 
 
+
 def copy_files():
     print("Copying files...")
     files_to_copy = [
-        os.path.expanduser("~/dots/scripts/.bashrc")
+        ("~/dots/bash/.bashrc", "~/.config"),
+        ("~/dots/libvirt/libvirtd.conf", "/etc/libvirt/")
     ]
-    for file_path in files_to_copy:
-        dest = os.path.expanduser("~/.config")
+    for src, dest in folders_to_copy:
+        src = os.path.expanduser(src)
+        dest = os.path.expanduser(dest)
         try:
-            shutil.copy(file_path, dest)
-            print(f"File copied: {file_path} to {dest}")
+            shutil.copy(src, dest)
+            print(f"Folder copied: {src} to {dest}")
         except FileNotFoundError:
-            print(f"Source file not found: {file_path}")
+            print(f"Source folder not found: {src}")
         except FileExistsError:
-            print(f"File already exists at destination: {dest}")
+            print(f"Folder already exists at destination: {dest}")
+
 
 
 def copy_folders():
