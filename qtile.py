@@ -54,7 +54,7 @@ def check_packages():
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "pavucontrol", "pipewire-alsa",
         "pipewire-pulse", "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal", "variety",
-        "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie"
+        "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie", "freerdp"
     ]
     for package in packages:
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
