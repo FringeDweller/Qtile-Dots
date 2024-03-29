@@ -72,9 +72,10 @@ keys = [
     Key([mod], "b", lazy.spawn(browser), desc='Web browser'),
     Key([mod], "m", lazy.spawn(filemanager), desc='File Manager'),
     Key([mod], "e", lazy.spawn(ide), desc='IDE'),
+    Key([mod], "e", lazy.spawn(os.path.expanduser("~/.config/win.sh")), desc='Windows'),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on the focused window",),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
