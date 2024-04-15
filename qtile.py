@@ -53,7 +53,7 @@ def check_packages():
         "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3", "arc-gtk-theme", "swtpm",
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "pavucontrol", "pipewire-alsa",
         "pipewire-pulse", "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
-        "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal", "variety", "docker",
+        "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal", "variety", "docker", "incus"
         "docker-compose", "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie", "freerdp2"
     ]
     for package in packages:
