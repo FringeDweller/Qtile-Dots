@@ -53,7 +53,7 @@ def check_packages():
         "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3", "arc-gtk-theme", "swtpm",
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "pavucontrol", "pipewire-alsa",
         "pipewire-pulse", "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
-        "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal", "variety", "docker", "incus"
+        "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal", "variety", "docker", "incus",
         "docker-compose", "thunar", "nerd-fonts", "nano", "nano-syntax-highlighting", "udiskie", "freerdp2"
     ]
     for package in packages:
@@ -74,7 +74,7 @@ def check_paru():
 def check_optional_packages():
     print("Checking and installing optional packages...")
     optional_packages = [
-        "vscodium-bin", "udisks2", "gvfs", "vscodium-bin", "netbird-bin", "nomachine",
+        "vscodium-bin", "udisks2", "gvfs", "vscodium-bin", "netbird-bin",
         "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep","fzf",
         "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio", "qtile-extras"
     ]
