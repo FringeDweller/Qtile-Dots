@@ -70,7 +70,7 @@ def install_yay():
     subprocess.run(["git", "clone", "https://aur.archlinux.org/yay.git"])
 
     # Change to the yay directory
-    subprocess.run(["cd", "yay"])
+    os.chdir('yay')
 
     # Build and install yay
     print("Building and installing yay...")
@@ -79,7 +79,7 @@ def install_yay():
     print("yay has been installed successfully!")
 
     # Change to the dots directory
-    subprocess.run(["cd", ".."])
+    os.chdir('..')
 
 
 def check_optional_packages():
