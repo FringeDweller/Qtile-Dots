@@ -75,7 +75,7 @@ def check_optional_packages():
     print("Checking and installing optional packages...")
     optional_packages = [
         "vscodium-bin", "udisks2", "gvfs", "vscodium-bin", "netbird-bin", "xrdp", "xorgxrdp-nvidia",
-        "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep","fzf",
+        "ffmpegthumbnailer", "unarchiver", "jq", "poppler", "fd", "ripgrep","fzf", "pipewire-module-xrdp-git",
         "zoxide", "brave-bin", "python-psutil", "python-pulsectl-asyncio", "qtile-extras"
     ]
     for package in optional_packages:
