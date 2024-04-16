@@ -61,14 +61,25 @@ def check_packages():
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
             subprocess.run(['sudo', 'pacman', '-S', '--needed', '--noconfirm', package])
+            
 
+def install_yay():
 
-def check_paru():
-    print("Checking and installing Paru...")
-    if subprocess.run(['pacman', '-Q', 'paru']).returncode != 0:
-        subprocess.run(['git', 'clone', 'https://aur.archlinux.org/paru.git', '/tmp/paru'])
-        os.chdir("/tmp/paru")
-        subprocess.run(['makepkg', '-si'])
+    # Clone the yay repository
+    print("Cloning yay repository...")
+    subprocess.run(["git", "clone", "https://aur.archlinux.org/yay.git"])
+
+    # Change to the yay directory
+    subprocess.run(["cd", "yay"])
+
+    # Build and install yay
+    print("Building and installing yay...")
+    subprocess.run(["makepkg", "-si"])
+
+    print("yay has been installed successfully!")
+
+    # Change to the dots directory
+    subprocess.run(["cd", ".."])
 
 
 def check_optional_packages():
@@ -82,7 +93,7 @@ def check_optional_packages():
         installed = subprocess.run(['sudo', 'pacman', '-Q', package], capture_output=True)
         if installed.returncode != 0:
             print(f"{package} is not installed. Installing...")
-            subprocess.run(['paru', '-S', "--needed", '--noconfirm', package])
+            subprocess.run(['yay', '-S', "--needed", '--noconfirm', package])
 
 
 def check_ssh():
@@ -217,7 +228,7 @@ def main():
     backup_config()
     overwrite_pacman_conf()
     check_packages()
-    check_paru()
+    install_yay()
     check_optional_packages()
     check_ssh()
     install_netbird_service()
