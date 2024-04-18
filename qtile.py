@@ -146,7 +146,8 @@ def copy_files():
     files_to_copy = [
         ("~/dots/bash/.bashrc", "~/.config"),
         ("~/dots/libvirt/libvirtd.conf", "/etc/libvirt/"),
-        ("~/dots/tigervnc/x0vncserver.service", "/etc/systemd/system/")
+        ("~/dots/tigervnc/x0vncserver.service", "/etc/systemd/system/"),
+        ("~/dots/scripts/win.sh", "~/.config/")
     ]
     for src, dest in files_to_copy:
         src = os.path.expanduser(src)
