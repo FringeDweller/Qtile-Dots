@@ -35,9 +35,9 @@ def backup_config():
 def remove_iptables():
     try:
         subprocess.run(['sudo', 'pacman', '-R', 'iptables', '--noconfirm'])
-        print("ipables has been removed.")
+        print(f"ipables has been removed.")
     except subprocess.CalledProcessError as e:
-        print("Error removing iptables.....")
+        print(f"Error removing iptables: {e}")
 
 def overwrite_pacman_conf():
     try:
