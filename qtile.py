@@ -100,6 +100,18 @@ def check_optional_packages():
             print(f"{package} is not installed. Installing...")
             subprocess.run(['yay', '-S', "--needed", '--noconfirm', package])
 
+def install_wine():
+    """
+    Run the bash script as sudo using subprocess.
+
+    Returns:
+        subprocess.CompletedProcess: The result of running the script.
+    """
+    script_path = os.path.expanduser("~/dots/scripts/wine.sh")  # replace with the actual path
+    command = f"sudo bash {script_path}"
+    result = subprocess.run(command, shell=True, check=True)
+    return result
+
 
 def check_ssh():
     print("Checking and enabling SSH service...")
