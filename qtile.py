@@ -34,7 +34,7 @@ def backup_config():
 
 
 def install_incus():
-    subprocess.run(['sudo', 'pacman', '-Q', 'incus'], capture_output=True)
+    installed = subprocess.run(['sudo', 'pacman', '-Q', 'incus'], capture_output=True)
     if installed.returncode != 0:
         print("Incus is not installed. Installing...")
         subprocess.run(['sudo', 'pacman', '-S', '--needed', 'incus'])
