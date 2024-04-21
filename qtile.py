@@ -32,12 +32,13 @@ def backup_config():
     except shutil.Error as e:
         print(f"Error moving directory: {e}")
 
-def remove_iptables():
-    try:
-        subprocess.run(['sudo', 'pacman', '-R', 'iptables', '--noconfirm'])
-        print(f"ipables has been removed.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error removing iptables: {e}")
+
+def install_incus():
+    subprocess.run(['sudo', 'pacman', '-Q', 'incus'], capture_output=True)
+    if installed.returncode != 0:
+        print("Incus is not installed. Installing...")
+        subprocess.run(['sudo', 'pacman', '-S', '--needed', 'incus'])
+
 
 def overwrite_pacman_conf():
     try:
@@ -55,7 +56,7 @@ def overwrite_pacman_conf():
 def check_packages():
     print("Checking and installing necessary packages...")
     packages = [
-        "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3", "arc-gtk-theme", "swtpm", "incus",
+        "git", "xorg", "xorg-xinit", "picom", "alacritty", "gtk3", "arc-gtk-theme", "swtpm",
         "dunst", "neofetch", "qemu-full", "virt-manager", "rofi", "pavucontrol", "pipewire-alsa",
         "pipewire-pulse", "virt-viewer", "dnsmasq", "bridge-utils", "libguestfs", "ebtables", "vde2",
         "openbsd-netcat","openssh", "feh", "mc", "alsa-utils", "python-pywal", "variety", "docker", "tigervnc",
@@ -245,7 +246,7 @@ def set_gtk_theme(theme_name):
 
 def main():
     backup_config()
-    remove_iptables()
+    install_incus()
     overwrite_pacman_conf()
     check_packages()
     install_yay()
