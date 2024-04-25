@@ -112,23 +112,6 @@ def check_ssh():
 def install_wine():
     # Install wine and its dependencies
     subprocess.run(["yay", "wine-stable"])
-
-    # Install optional dependencies for wine
-    optional_deps = subprocess.run(
-        ["pacman", "-Si", "wine"],
-        stdout=subprocess.PIPE,
-        universal_newlines=True,
-    )
-    optional_deps_output = optional_deps.stdout
-
-    start_index = optional_deps_output.find("Optional Deps")
-    end_index = optional_deps_output.find("\nConflicts With")
-
-    optional_deps_list = optional_deps_output[start_index:end_index].split("\n")[2:-1]
-    optional_deps_list = [dep.strip().split(":")[0] for dep in optional_deps_list if dep.strip()]
-
-    if optional_deps_list:
-        subprocess.run(["sudo", "pacman", "-S", "--asdeps", "--needed"] + optional_deps_list)
         
 
 def install_netbird_service():
