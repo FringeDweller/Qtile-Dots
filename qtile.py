@@ -111,7 +111,7 @@ def check_ssh():
 
 def install_wine():
     # Install wine and its dependencies
-    subprocess.run(["sudo", "pacman", "-S", "wine", "wine-mono", "wine-gecko"])
+    subprocess.run(["yay", "wine-stable"])
 
     # Install optional dependencies for wine
     optional_deps = subprocess.run(
