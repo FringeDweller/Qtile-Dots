@@ -109,11 +109,6 @@ def check_ssh():
     subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
 
 
-def install_wine():
-    # Install wine and its dependencies
-    subprocess.run(["yay", "wine-stable"])
-        
-
 def install_netbird_service():
     try:
         print("Installing Netbird service...")
@@ -245,7 +240,6 @@ def main():
     install_yay()
     check_optional_packages()
     check_ssh()
-    install_wine()
     install_netbird_service()
     start_netbird_service()
     install_rofi_themes()
