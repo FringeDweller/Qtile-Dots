@@ -101,18 +101,6 @@ def check_optional_packages():
             print(f"{package} is not installed. Installing...")
             subprocess.run(['yay', '-S', "--needed", '--noconfirm', package])
 
-def install_wine():
-    """
-    Run the bash script as sudo using subprocess.
-
-    Returns:
-        subprocess.CompletedProcess: The result of running the script.
-    """
-    script_path = os.path.expanduser("~/dots/scripts/wine.sh")  # replace with the actual path
-    command = f"sudo bash {script_path}"
-    result = subprocess.run(command, shell=True, check=True)
-    return result
-
 
 def check_ssh():
     print("Checking and enabling SSH service...")
@@ -120,6 +108,28 @@ def check_ssh():
     subprocess.run(['sudo', 'systemctl', 'enable', 'sshd'])
     subprocess.run(['sudo', 'systemctl', 'start', 'sshd'])
 
+
+def install_wine():
+    # Install wine and its dependencies
+    subprocess.run(["sudo", "pacman", "-S", "wine", "wine-mono", "wine-gecko"])
+
+    # Install optional dependencies for wine
+    optional_deps = subprocess.run(
+        ["pacman", "-Si", "wine"],
+        stdout=subprocess.PIPE,
+        universal_newlines=True,
+    )
+    optional_deps_output = optional_deps.stdout
+
+    start_index = optional_deps_output.find("Optional Deps")
+    end_index = optional_deps_output.find("\nConflicts With")
+
+    optional_deps_list = optional_deps_output[start_index:end_index].split("\n")[2:-1]
+    optional_deps_list = [dep.strip().split(":")[0] for dep in optional_deps_list if dep.strip()]
+
+    if optional_deps_list:
+        subprocess.run(["sudo", "pacman", "-S", "--asdeps", "--needed"] + optional_deps_list)
+        
 
 def install_netbird_service():
     try:
